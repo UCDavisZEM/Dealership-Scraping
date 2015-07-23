@@ -1,0 +1,71 @@
+
+#library(RCurl)
+#library(XML)
+#test cases
+#url = "http://www.balisechevybuickgmc.com/new-inventory/index.htm"
+#url = "http://www.lonestarchevrolet.com/new-inventory/index.htm"
+#url = "http://www.balisehonda.com/new-inventory/index.htm"
+#url = "http://www.davesmith.com/new-inventory/"
+
+
+
+#grab the linklist
+
+
+getLinklist.3 = function(url){
+  xdata = getURLContent(url, useragent = "R")
+  doc = htmlParse(xdata, asText = TRUE)
+  baselink = url
+  href = unique(getHTMLLinks(url))
+  #pages are obey ?start= pattern
+  index = grep("?start=",href, fixed = T)
+  
+  #number of cars per page
+  number = as.numeric(gsub(".*=([0-9]+).*", "\\1", href[index]))
+  
+  #total number of cars in new inventory
+  totalnumber = as.numeric(xpathSApply(doc, "//span[@id='current-search-count']",xmlValue))
+  #each pages start number
+  startnumber = seq(0, totalnumber, number)
+  #all the links 
+  Linklist = sapply(1:length(startnumber), function(i) paste0(baselink, gsub("[0-9]+", startnumber[i], href[index])))
+  return(Linklist)
+}
+
+
+
+#scrapping data
+getdatacontent.3 = function(node, content){
+  tt = xmlAttrs(node)[content]
+  return(tt)
+}
+
+
+scrapeInfo.3 <- function(url)
+{
+  xdata = getURLContent(url, useragent = "R")
+  doc = htmlParse(xdata, asText = TRUE)
+  vin.node = getNodeSet(doc, "//div[@data-vin]")
+  vins = unique(sapply(vin.node,getdatacontent.3, content = "data-vin"))
+  make = sapply(vin.node,getdatacontent.3, content = "data-make")
+  
+  model = "NA"
+  trim = "NA"
+  year = as.numeric(NA)
+  
+  df <- data.frame(vins,make,model,trim, year, stringsAsFactors = F)
+  colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
+  return(df)
+} 
+
+#scrape car information from all the pages
+alldata.3 = function(url){
+  links = getLinklist.3(url)
+  tt = lapply(links, scrapeInfo.3)
+  cardata = Reduce(function(x, y) rbind(x, y), tt)
+  return(cardata)
+}
+
+
+
+
