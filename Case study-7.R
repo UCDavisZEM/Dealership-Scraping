@@ -1,5 +1,5 @@
 #library(RCurl)
-#library(XML)
+library(XML)
 #test cases 
 #url = "http://www.lundgrenhondaofgreenfield.com/inventory/newsearch/New/"
 #url = "http://www.hondacarsofboston.com/inventory/newsearch/New/"
@@ -57,6 +57,6 @@ alldata.7 = function(url){
   return(cardata)
 }
 
-testdata = alldata.7(url)
+#testdata = alldata.7(url)
 
 
