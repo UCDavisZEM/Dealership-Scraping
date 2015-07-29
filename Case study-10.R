@@ -76,8 +76,9 @@ alldata.10 = function(url){
   return(cardata)
 }
 
-url = "http://www.hyannishonda.com/Southeastern-Massachusetts/For-Sale/New/"
-url = "http://imperialfordmilford.com/Providence-RI-Worcester-MA/For-Sale/New/"
-testdata = alldata.10(url)
+#url = "http://www.hyannishonda.com/Southeastern-Massachusetts/For-Sale/New/"
+#url = "http://imperialfordmilford.com/Providence-RI-Worcester-MA/For-Sale/New/"
+
+#testdata = alldata.10(url)
 
 
