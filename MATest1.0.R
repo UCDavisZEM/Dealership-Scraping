@@ -8,6 +8,8 @@ source("Case study-7.R")
 source("Case study-8.R")
 source("Case study-9(smart).R")
 source("Case study-10.R")
+source("Case study-11.R")
+source("Case study-12.R")
 
 link_file = read.csv("./DealerInventoryLinks//MAChevInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
 links = link_file$Website
@@ -57,7 +59,9 @@ getData <- function(link,case)
          case7 = alldata.7(link),
          case8 = alldata.8(link),
          case9 = alldata.9(link),
-         case10 = alldata.10(link))
+         case10 = alldata.10(link),
+         case11 = alldata.11(link),
+         case12 = alldata.12(link))
 }
 #  (^http.*Cars$)
   
