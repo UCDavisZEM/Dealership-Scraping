@@ -18,10 +18,11 @@
 getLinkList.8 <- function(url)
 {
     require(RSelenium)
-    pJS <- phantom(pjs_cmd = "./phantomjs-2.0.0-macosx/bin/phantomjs")
-    Sys.sleep(5)
-    remDr <- remoteDriver(browserName = 'phantomjs')
-    remDr$open()
+    #pJS <- phantom(pjs_cmd = "./phantomjs-2.0.0-macosx/bin/phantomjs")
+    #Sys.sleep(5)
+    #remDr <- remoteDriver(browserName = 'phantomjs')
+    remDr = remoteDriver(browserName = "firefox")
+    remDr$open(silent = TRUE)
     remDr$navigate(url)
     
     #this following approach works
@@ -31,15 +32,12 @@ getLinkList.8 <- function(url)
     vlinks = unique(links[grep('/vehicle/[0-9A-Z]{17}-',links)])
     #length(vlinks)
     remDr$close
-    pJS$stop()
+    #pJS$stop()
     return(vlinks)
 }
 #//div[@class='inveContainer']//ul/li[@class='vinDisplay']
 #linkInfo <- remDr$findElement(using = "xpath", "//div[@class=vehiclePhoto]")
 #successfully get the node set
-p = getNodeSet(tdoc,"//div[@class='invBlock2']//ul/li[@class='vinDisplay']")
-p[[3]]
-
 
 
 scrapeInfo.8 <- function(links)
