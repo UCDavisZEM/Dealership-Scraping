@@ -6,7 +6,7 @@
 #url = "http://www.lonestarchevrolet.com/new-inventory/index.htm"
 #url = "http://www.balisehonda.com/new-inventory/index.htm"
 #url = "http://www.davesmith.com/new-inventory/"
-
+#url = "http://www.quirkford.com/new-inventory/?"
 
 
 #grab the linklist
@@ -15,7 +15,8 @@
 getLinklist.3 = function(url){
   xdata = getURLContent(url, useragent = "R")
   doc = htmlParse(xdata, asText = TRUE)
-  baselink = url
+  
+  baselink = strsplit(url, "\\/\\?")[[1]][1]
   href = unique(getHTMLLinks(url))
   #pages are obey ?start= pattern
   index = grep("?start=",href, fixed = T)
@@ -65,6 +66,8 @@ alldata.3 = function(url){
   cardata = Reduce(function(x, y) rbind(x, y), tt)
   return(cardata)
 }
+
+##cc = alldata.3(url)
 
 
 
