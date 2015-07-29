@@ -20,7 +20,7 @@ zipcode$city[zipcode$zip=='06790']
 # through scraping on the Google result page
 
 # First, we need to do some data cleaning for the file (eg.ChevroletMAdealers.csv).
-ma_df = read.csv("FordMAdealers.csv",header=TRUE,stringsAsFactors=F)
+ma_df = read.csv("NissanMAdealers.csv",header=TRUE,stringsAsFactors=F)
 head(ma_df)
 length(unique(ma_df$Name))
 #There is totally unique 97 results from Google Places API.
@@ -44,7 +44,7 @@ maDealersLinks= maDealers %>%
 
 length(maDealersLinks$Name)
 #Around 90 Chevrolet local dealerships(not exactly correct )
-mainDealers = maDealersLinks$Name[grep("ford",maDealersLinks$Name,ignore.case=TRUE )] #name with chevrolet 43
+mainDealers = maDealersLinks$Name[grep("nissan",maDealersLinks$Name,ignore.case=TRUE )] #name with chevrolet 43
 length(mainDealers) #49 Toyota dealerships #35 Honda dealerships #25 Nissan dealerships
 otherDealers = maDealersLinks$Name[-grep('nissan',maDealersLinks$Name,ignore.case=TRUE )]#name without chevrolet 47
 length(otherDealers)
@@ -53,6 +53,7 @@ length(otherDealers)
 #-----------------------------------------------
 # Scrape the inventory links from Google search result page
 library(RHTMLForms)
+library(XML)
 google= "http://www.google.com"
 
 google_forms = getHTMLFormDescription(google)
@@ -138,7 +139,13 @@ clean_links <- function(links_ls)
     }
   else
   {
-    if(TRUE%in%grepl('search=',links_ls))
+    if(TRUE%in%grepl('^http.*/used-inventory',links_ls))
+    {
+      link = links_ls[grep('^http.*/used-inventory',links_ls)][1]
+      link = gsub('(^http.*/)used.*','\\1',link)
+      return(paste0(link,'new-inventory/'))
+    }
+    else if(TRUE%in%grepl('search=',links_ls))
     {
       link = links_ls[grep('search=',links_ls)][1]
       link = gsub('(search=).*','\\1',link)
@@ -146,12 +153,6 @@ clean_links <- function(links_ls)
         return(paste0(link,'new'))
       else
         return(NA)
-    }
-    else if(TRUE%in%grepl('^http.*/used-inventory',links_ls))
-    {
-      link = links_ls[grep('^http.*/used-inventory',links_ls)][1]
-      link = gsub('(^http.*/)used.*','\\1',link)
-      return(paste0(link,'new-inventory/'))
     }
     else
       return(NA)  #return NA if we can't find the links
@@ -189,15 +190,15 @@ verifyURL <- function(df)
 }
 
 #test  7(used jeep),10(no website),16(permanently closed), 22(can be found), 40(can be found)
-test = inventoryLinks[[52]]
+links_ls = inventoryLinks[[]]
 length(grep("(/new-inventory)|(/new-vehicles?)|(/new_inventory)|(SearchResults\\?search=new$)|(search/new)|(/searchnew)|(/new/?$)|(Cars$)|(condition=new)",test,ignore.case=TRUE))
 test[grep("(/new-inventory)|(/new-vehicles?)|(/new_inventory)|(SearchResults\\?search=new$)|(search/new)|(/searchnew)|(/new/?$)|(Cars$)|(condition=new)",test,ignore.case=TRUE)]
-requests[52]
+requests[19]
 #11,36 n
 #The complet list of authorized local dealerships' inventory links
 authorized_ls = as.vector(sapply(inventoryLinks,clean_links))
 #manually check NA
-authorized_ls[11]="http://www.wallsford.com/inventory/" 
+authorized_ls[5]="http://www.berteranissan.com/new-inventory/" 
 chevIL =df  #no 
 chevIL = data.frame(Name=mainDealers,Website=authorized_ls,stringsAsFactors=FALSE)
 #May Need to check those NA values manually and get rid of those unusual
@@ -205,8 +206,8 @@ chevIL$Website[11] = "http://www.townsendford.net/new-inventory/"
 chevIL$Website[36] = "http://jackmaddenfordsales.com/Boston/For-Sale/New/" #get rid of 14
 #Need to double check whether there are duplicates, and update any unusual
 chevIL[duplicated(chevIL$Website),]
-chevIL$Website[c(4,37,43,45,52,48)] = NA
+chevIL$Website[19] = NA
 chevILinks = na.omit(chevIL) 
 dim(chevILinks)
-write.csv(file='MAFordInventoryLinks.csv',x=chevILinks,row.names=FALSE)
+write.csv(file='MANissanInventoryLinks.csv',x=chevILinks,row.names=FALSE)
 df = chevIL
