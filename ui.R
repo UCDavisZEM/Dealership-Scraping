@@ -1,13 +1,13 @@
 library(shiny)
 
 # Load the ggplot2 package which provides
-# the 'mpg' dataset.
+# the 'chev_df' dataset.
 library(ggplot2)
 
 # Define the overall UI
 shinyUI(
   fluidPage(
-    titlePanel("Basic DataTable"),
+    titlePanel("Vehicle Local Dealerships"),
     
     # Create a new Row in the UI for selectInputs
     fluidRow(
@@ -15,20 +15,20 @@ shinyUI(
              selectInput("man", 
                          "Manufacturer:", 
                          c("All", 
-                           unique(as.character(mpg$manufacturer))))
+                           unique(as.character(chev_df$manufacturer))))
       ),
       column(4, 
-             selectInput("trans", 
-                         "Transmission:", 
+             selectInput("dealer", 
+                         "Dealership:", 
                          c("All", 
-                           unique(as.character(mpg$trans))))
-      ),
+                           unique(as.character(chev_df$Dealership))))
+      ),       
       column(4, 
-             selectInput("cyl", 
-                         "Cylinders:", 
+             selectInput("model", 
+                         "Model:", 
                          c("All", 
-                           unique(as.character(mpg$cyl))))
-      )        
+                           unique(as.character(chev_df$Model))))
+      )       
     ),
     # Create a new row for the table.
     fluidRow(

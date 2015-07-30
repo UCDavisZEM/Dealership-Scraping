@@ -60,7 +60,7 @@ scrapeInfo.3 <- function(url)
   
   df <- data.frame(vins,make,model,trim, year, stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
-  print(url)
+  #print(url)
   return(df)
 } 
 

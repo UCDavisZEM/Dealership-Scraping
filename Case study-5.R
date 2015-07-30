@@ -23,7 +23,7 @@ alldata.5 = function(url){
   
   year = rep(NA, length(vin_str))
   trim = rep(NA, length(vin_str))
-  df <- data.frame(vin_str,make_str,models_str,trim, year)
+  df <- data.frame(vin_str,make_str,models_str,trim, year,stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model","Trim", "Year")
   return(df)
 }
