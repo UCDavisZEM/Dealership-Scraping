@@ -1,0 +1,48 @@
+#Case 14
+# url = "http://www.copelandtoyota.com/NewToyotaCars.aspx"
+
+#grab the linklist
+
+getLinklist.14 = function(url){
+  require(RCurl)
+  baselink = substr(url, 1, gregexpr("/",url)[[1]][3]-1)
+  txt = getURLContent(url, useragent = "R")
+  doc = htmlParse(txt, asText = TRUE)
+  linkNodes = getNodeSet(doc, "//span[@id='BottomPaging']/a[@href]")  
+  lastlink = unname(sapply(linkNodes,getdatacontent.14,content='href'))    
+  totalpage = as.numeric(gsub(".*=([0-9]+).*", "\\1", lastlink))
+  Linklist = sapply(1:totalpage, function(i) paste(baselink, gsub("[0-9]+", i, lastlink), sep = "/"))         
+  return(Linklist)
+}
+
+getdatacontent.14 = function(node, content){
+  tt = xmlAttrs(node)[content]
+  return(tt)
+}
+
+scrapeInfo.14 <- function(url)
+{
+  txt = getURLContent(url, useragent = "R")
+  doc = htmlParse(txt, asText = TRUE)
+  nodes = getNodeSet(doc, "//a[@id='sendToMobileLink']")
+  vins = unique(sapply(nodes,getdatacontent.6, content = "vin"))
+  name = sapply(nodes,getdatacontent.6, content = "ref")
+  tt = strsplit(name, " ")
+  make = sapply(tt, "[", 2)
+  model = "NA"
+  trim = "NA"
+  year = sapply(tt, "[", 1)
+  
+  df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
+  colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
+  return(df)
+} 
+
+#scrape car information from all the pages
+alldata.14 = function(url){
+  require(XML)
+  links = getLinklist.6(url)
+  tt = lapply(links, scrapeInfo.6)
+  cardata = Reduce(function(x, y) rbind(x, y), tt)
+  return(cardata)
+}

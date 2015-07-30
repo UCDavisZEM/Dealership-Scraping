@@ -77,9 +77,9 @@ case_ls = unname(sapply(links,check_case))
 link_file$Name[which(case_ls=="unknown")]
 link_file$Website[which(case_ls=="unknown")]
 
-alldata = mapply(getData,links[-which(case_ls=="unknown")],case_ls[-which(case_ls=="unknown")])
+alldata = mapply(getData,links[-which(case_ls=="unknown")][18],case_ls[-which(case_ls=="unknown")][18])
 #class(alldata)
-colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")]
+colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")][18]
 
 getDataframe <-function(alldata){
   lengths<-sapply(alldata[1,],length)
