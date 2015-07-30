@@ -36,6 +36,12 @@ check_case <- function(link)
       case = "case9"
   else if(grepl("For-sale/new",link,ignore.case=T))#10
       case = "case10"
+  else if(grepl("/new-cars-",link,ignore.case=T))#11
+      case = "case11"
+  else if(grepl("/view/New/",link,ignore.case=T))#12
+      case = "case12"
+  else if(grepl("/NewToyota",link,ignore.case=T))#13
+      case = "case13"
   else
       case = "unknown"
   return(case)
