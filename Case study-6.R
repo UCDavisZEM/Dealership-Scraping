@@ -1,5 +1,5 @@
 
-library(XML)
+#library(XML)
 #library(RCurl)
 #test case
 #url = "http://www.libertychev.com/searchnew.aspx"
@@ -29,21 +29,22 @@ scrapeInfo.6 <- function(url)
   doc = htmlParse(txt, asText = TRUE)
   nodes = getNodeSet(doc, "//a[@id='sendToMobileLink']")
   vins = unique(sapply(nodes,getdatacontent.6, content = "vin"))
+  index = match(vins, sapply(nodes,getdatacontent.6, content = "vin"))
   name = sapply(nodes,getdatacontent.6, content = "ref")
   tt = strsplit(name, " ")
-  make = sapply(tt, "[", 2)
+  make = sapply(tt, "[", 2)[index]
   model = "NA"
   trim = "NA"
-  year = sapply(tt, "[", 1)
+  year = sapply(tt, "[", 1)[index]
   
   df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
+  #print(url)
   return(df)
 } 
 
 #scrape car information from all the pages
 alldata.6 = function(url){
-  require(XML)
   links = getLinklist.6(url)
   tt = lapply(links, scrapeInfo.6)
   cardata = Reduce(function(x, y) rbind(x, y), tt)
