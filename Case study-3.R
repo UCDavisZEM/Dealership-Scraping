@@ -8,7 +8,8 @@
 #url = "http://www.davesmith.com/new-inventory/"
 #url = "http://www.quirkford.com/new-inventory/?"
 #url = "http://www.toyotaofbristol.com/exotic-new-inventory/index.htm"
-url = "http://www.commonwealthchevrolet.com/new-inventory/index.htm"
+#url = "http://www.commonwealthchevrolet.com/new-inventory/index.htm"
+#url = "https://www.liatoyotaofwilbraham.com/new-inventory/index.htm"
 #grab the linklist
 
 
@@ -16,8 +17,9 @@ getLinklist.3 = function(url){
   xdata = getURLContent(url, useragent = "R")
   doc = htmlParse(xdata, asText = TRUE)
   
-  baselink = strsplit(url, "\\/\\?")[[1]][1]
-  href = unique(getHTMLLinks(url))
+  baselink = strsplit(url, "\\?")[[1]][1]
+  href = unique(getHTMLLinks(doc))
+ 
   #pages are obey ?start= pattern
   index = grep("?start=",href, fixed = T)
   
@@ -48,7 +50,9 @@ scrapeInfo.3 <- function(url)
   doc = htmlParse(xdata, asText = TRUE)
   vin.node = getNodeSet(doc, "//div[@data-vin]")
   vins = unique(sapply(vin.node,getdatacontent.3, content = "data-vin"))
-  make = sapply(vin.node,getdatacontent.3, content = "data-make")
+  #some page have two cars with same vin number
+  index = match(vins, sapply(vin.node,getdatacontent.3, content = "data-vin"))
+  make = sapply(vin.node,getdatacontent.3, content = "data-make")[index]
   
   model = "NA"
   trim = "NA"
@@ -56,6 +60,7 @@ scrapeInfo.3 <- function(url)
   
   df <- data.frame(vins,make,model,trim, year, stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
+  print(url)
   return(df)
 } 
 
