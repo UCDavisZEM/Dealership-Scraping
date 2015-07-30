@@ -61,14 +61,12 @@ getData <- function(link,case)
          case9 = alldata.9(link),
          case10 = alldata.10(link),
          case11 = alldata.11(link),
-         case12 = alldata.12(link))
+         case12 = alldata.12(link),
+         case13 = alldata.13(link))
 }
 #  (^http.*Cars$)
   
 #  (^http.*/new-cars)
   
-alldata = mapply(getData,links[20:length(links)],case_ls[20:length(links)])
+alldata = mapply(getData,links[28],case_ls[28])
 
-
-links[20]
-case_ls[20]
