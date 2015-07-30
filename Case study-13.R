@@ -1,8 +1,11 @@
 ####Case Study 13
 #library(RSelenium)
-
 #url = "http://haddadtoyota.com/NewToyotaCars"
 #url = "http://foxtoyotaclinton.com/NewToyotaCars"
+getdatacontent.13 = function(node, content){
+  tt = xmlAttrs(node)[content]
+  return(tt)
+}
 
 getLinklist.13 = function(url){
   doc = htmlParse(url)
@@ -30,9 +33,13 @@ scrapeInfo.13 <- function(url)
   #this following approach works
   txt=remDr$getPageSource()
   doc = htmlParse(txt, asText = TRUE)
-  xpathSApply(doc, "//span[@class='field' and @itemprop='name']", xmlValue)
- 
-  vins = xpathSApply(doc, "//span[@class='field' and @itemprop='productID']", xmlValue)
+  
+  
+  
+  vin.node = getNodeSet(doc, "//img[@class='inventoryPhoto' and @src]")
+  temp = sapply(vin.node,getdatacontent.3, content = "src")
+  vins = unname(gsub(".*([0-9A-Z]{17}).*", "\\1", temp))
+  
   make = xpathSApply(doc, "//span[@class='field' and @itemprop='name']", xmlValue)
   model = xpathSApply(doc, "//span[@class='field' and @itemprop='model']", xmlValue)
   trim = xpathSApply(doc, "//span[@class='field' and @itemprop='description']", xmlValue)
