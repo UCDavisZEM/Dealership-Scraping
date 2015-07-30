@@ -12,8 +12,10 @@ source("Case study-11.R")
 source("Case study-12.R")
 source("Case study-13.R")
 
-link_file = read.csv("./DealerInventoryLinks//MAChevInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
+
+link_file = read.csv("./DealerInventoryLinks//MAToyotaInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
 links = link_file$Website
+
 
 check_case <- function(link)
 {
@@ -25,8 +27,8 @@ check_case <- function(link)
       case = "case3"
   else if(grepl("new_inventory",link,ignore.case=T))  #4
       case = "case4"
-  else if(grepl("new-vehicles",link,ignore.case=T)) #5
-      case = "case5"
+  #else if(grepl("new-vehicles",link,ignore.case=T)) #5
+  #    case = "case5"
   else if(grepl("searchnew\\.aspx$",link,ignore.case=T))#6
       case = "case6"
   else if(grepl("newsearch/new",link,ignore.case=T)) #7
@@ -48,11 +50,6 @@ check_case <- function(link)
   return(case)
 }
 
-case_ls = unname(sapply(links,check_case))
-link_file$Name[which(case_ls=="unknown")]
-link_file$Website[which(case_ls=="unknown")]
-#for test
-
 getData <- function(link,case)
 {  
   print(link)
@@ -61,7 +58,7 @@ getData <- function(link,case)
          case2 = alldata.2(link),
          case3 = alldata.3(link),
          case4 = alldata.4(link),
-         case5 = alldata.5(link),
+         #case5 = alldata.5(link),
          case6 = alldata.6(link),
          case7 = alldata.7(link),
          case8 = alldata.8(link),
@@ -75,5 +72,22 @@ getData <- function(link,case)
   
 #  (^http.*/new-cars)
   
-alldata = mapply(getData,links[-which(case_ls=="unknown")],case_ls)
+case_ls = unname(sapply(links,check_case))
+#to know which cases we should keep working on
+link_file$Name[which(case_ls=="unknown")]
+link_file$Website[which(case_ls=="unknown")]
 
+alldata = mapply(getData,links[-which(case_ls=="unknown")],case_ls[-which(case_ls=="unknown")])
+#class(alldata)
+colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")]
+
+getDataframe <-function(alldata){
+  lengths<-sapply(alldata[1,],length)
+  data.frame(Dealership=rep(colnames(alldata),lengths),
+             lapply(split(alldata,rownames(alldata)[row(alldata)]), unlist),
+             row.names=NULL)
+}
+
+#Dealership Dataframe
+alldata_df = getDataframe(alldata)
+chev_df = alldata_df

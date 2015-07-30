@@ -1,5 +1,5 @@
 
-#library(RCurl)
+library(RCurl)
 #library(XML)
 #test cases
 #url = "http://www.balisechevybuickgmc.com/new-inventory/index.htm"
@@ -66,6 +66,7 @@ scrapeInfo.3 <- function(url)
 
 #scrape car information from all the pages
 alldata.3 = function(url){
+  require(XML)
   links = getLinklist.3(url)
   tt = lapply(links, scrapeInfo.3)
   cardata = Reduce(function(x, y) rbind(x, y), tt)
