@@ -7,8 +7,8 @@
 #url = "http://www.balisehonda.com/new-inventory/index.htm"
 #url = "http://www.davesmith.com/new-inventory/"
 #url = "http://www.quirkford.com/new-inventory/?"
-
-
+#url = "http://www.toyotaofbristol.com/exotic-new-inventory/index.htm"
+url = "http://www.commonwealthchevrolet.com/new-inventory/index.htm"
 #grab the linklist
 
 
