@@ -10,6 +10,7 @@ source("Case study-9(smart).R")
 source("Case study-10.R")
 source("Case study-11.R")
 source("Case study-12.R")
+source("Case study-13.R")
 
 link_file = read.csv("./DealerInventoryLinks//MAChevInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
 links = link_file$Website
@@ -74,5 +75,5 @@ getData <- function(link,case)
   
 #  (^http.*/new-cars)
   
-alldata = mapply(getData,links[28],case_ls[28])
+alldata = mapply(getData,links,case_ls)
 
