@@ -75,5 +75,5 @@ getData <- function(link,case)
   
 #  (^http.*/new-cars)
   
-alldata = mapply(getData,links,case_ls)
+alldata = mapply(getData,links[-which(case_ls=="unknown")],case_ls)
 
