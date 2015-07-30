@@ -37,18 +37,18 @@ check_case <- function(link)
   else if(grepl("For-sale/new",link,ignore.case=T))#10
       case = "case10"
   else
-      case = "unknow"
+      case = "unknown"
   return(case)
 }
 
 case_ls = unname(sapply(links,check_case))
-
+link_file$Name[which(case_ls=="unknown")]
+link_file$Website[which(case_ls=="unknown")]
 #for test
 
 getData <- function(link,case)
-{ 
-  if case =="unknown"
-    return(NA)
+{  
+  print(link)
   switch(case,
          case1 = alldata.1(link),
          case2 = alldata.2(link),
@@ -67,6 +67,8 @@ getData <- function(link,case)
   
 #  (^http.*/new-cars)
   
-mapply(getData,links,case_ls)
+alldata = mapply(getData,links[20:length(links)],case_ls[20:length(links)])
 
 
+links[20]
+case_ls[20]

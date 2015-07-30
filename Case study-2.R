@@ -8,10 +8,10 @@ url = "http://www.harr.com/search/new/tp/"
 
 #small function to get page links
 getPagelink = function(lastpagelink, pagenumber){
-  lastpagenumber = as.numeric(substr(lastpage, gregexpr("p:", lastpage)[[1]][2]+2,
-                                     gregexpr("p:", lastpage)[[1]][2]+2))
-  pagelink = paste0(strsplit(lastpage, lastpagenumber)[[1]][1], pagenumber, 
-                    strsplit(lastpage, lastpagenumber)[[1]][2])
+  lastpagenumber = as.numeric(substr(lastpagelink, gregexpr("p:", lastpagelink)[[1]][2]+2,
+                                     gregexpr("p:", lastpagelink)[[1]][2]+2))
+  pagelink = paste0(strsplit(lastpagelink, lastpagenumber)[[1]][1], pagenumber, 
+                    strsplit(lastpagelink, lastpagenumber)[[1]][2])
   return(pagelink)
 }
 

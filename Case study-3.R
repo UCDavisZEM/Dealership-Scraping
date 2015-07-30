@@ -27,7 +27,7 @@ getLinklist.3 = function(url){
   #total number of cars in new inventory
   totalnumber = as.numeric(xpathSApply(doc, "//span[@id='current-search-count']",xmlValue))
   #each pages start number
-  startnumber = seq(0, totalnumber, number)
+  startnumber = seq(0, totalnumber-1, number)
   #all the links 
   Linklist = sapply(1:length(startnumber), function(i) paste0(baselink, gsub("[0-9]+", startnumber[i], href[index])))
   return(Linklist)

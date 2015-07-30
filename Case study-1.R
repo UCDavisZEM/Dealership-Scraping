@@ -1,9 +1,9 @@
-library(XML)
+
 ##the only input url
 #url = "http://www.hanleesdavischevy.com/VehicleSearchResults?search=new&pageNumber=1"
 #url = "http://www.classicchevrolet.com/VehicleSearchResults?search=new"
 #url  = "http://www.centralchevyauto.com/VehicleSearchResults?search=new"
-doc = htmlParse(url)
+#doc = htmlParse(url)
 #baselink = xmlToList(doc, addAttributes = FALSE)[[1]]$base[1]
 #for try: http://www.gmautoplaza.com/VehicleSearchResults?search=new
 
@@ -31,7 +31,7 @@ getLinklist.1 = function(originalurl){
   }
   else{
     #get the first href
-    firstpagelink = paste0(baselink, gsub("2", "1", temp))
+    firstpagelink = paste0(baselink, gsub("2", "1", temp[length(temp)]))
     linklist = firstpagelink
     #grab next links
     nextlink  = getNextlink.1(originalurl, baselink)
@@ -71,6 +71,7 @@ scrapeInfo.1 <- function(url)
 
 #scrape car information from all the pages
 alldata.1 = function(url){
+  require(XML)
   links = getLinklist.1(url)
   tt = lapply(links, scrapeInfo.1)
   cardata = Reduce(function(x, y) rbind(x, y), tt)
