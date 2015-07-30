@@ -9,9 +9,9 @@ getLinklist.14 = function(url){
   txt = getURLContent(url, useragent = "R")
   doc = htmlParse(txt, asText = TRUE)
   linkNodes = getNodeSet(doc, "//span[@id='BottomPaging']/a[@href]")  
-  lastlink = unname(sapply(linkNodes,getdatacontent.14,content='href'))    
-  totalpage = as.numeric(gsub(".*=([0-9]+).*", "\\1", lastlink))
-  Linklist = sapply(1:totalpage, function(i) paste(baselink, gsub("[0-9]+", i, lastlink), sep = "/"))         
+  links = unname(sapply(linkNodes,getdatacontent.14,content='href'))    
+  totalpage = max(as.numeric(gsub(".*=([0-9]+?).*", "\\1", links)))
+  Linklist = sapply(1:totalpage, function(i) paste(baselink, sub("[0-9]+", i, links[1]), sep = "/"))         
   return(Linklist)
 }
 

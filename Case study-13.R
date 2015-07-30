@@ -21,20 +21,12 @@ getLinklist.13 = function(url){
 
 
 
-scrapeInfo.13 <- function(url)
+scrapeInfo.13 <- function(url,remDr)
 {
-  require(RSelenium)
-  RSelenium::startServer()
-  checkForServer()
-  remDr = remoteDriver(browserName = "firefox")
-  remDr$open()
-  remDr$navigate(url)
-  
+  remDr$navigate(url) 
   #this following approach works
   txt=remDr$getPageSource()
   doc = htmlParse(txt, asText = TRUE)
-  
-  
   
   vin.node = getNodeSet(doc, "//img[@class='inventoryPhoto' and @src]")
   temp = sapply(vin.node,getdatacontent.3, content = "src")
@@ -46,9 +38,7 @@ scrapeInfo.13 <- function(url)
   year = xpathSApply(doc, "//span[@class='field' and @itemprop='releaseDate']", xmlValue)
   df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
-  return(df)
-  
-  remDr$close
+  return(df)  
 }
 
 alldata.13 = function(url){
@@ -56,9 +46,14 @@ alldata.13 = function(url){
   require(XML)
   require(RCurl)
   require(jsonlite)
+  RSelenium::startServer()
+  checkForServer()
+  remDr = remoteDriver(browserName = "firefox")
+  remDr$open()
   links = getLinklist.13(url)
-  tt = lapply(links, scrapeInfo.13)
+  tt = lapply(links, scrapeInfo.13,remDr=remDr)
   cardata = Reduce(function(x, y) rbind(x, y), tt)
+  remDr$close
   return(cardata)
 }
 

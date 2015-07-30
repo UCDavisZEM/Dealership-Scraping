@@ -55,7 +55,7 @@ scrapeInfo.8 <- function(links)
 
 #scrape car information from all the pages
 alldata.8 = function(url){
-  vlinks = getLinklist.8(url)
+  vlinks = getLinkList.8(url)
   cardata = scrapeInfo.8(vlinks)
   return(cardata)
 }

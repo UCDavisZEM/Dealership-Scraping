@@ -13,7 +13,7 @@ source("Case study-12.R")
 source("Case study-13.R")
 
 
-link_file = read.csv("./DealerInventoryLinks//MAChevInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
+link_file = read.csv("./DealerInventoryLinks//MAToyotaInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
 links = link_file$Website
 
 
@@ -77,9 +77,9 @@ case_ls = unname(sapply(links,check_case))
 link_file$Name[which(case_ls=="unknown")]
 link_file$Website[which(case_ls=="unknown")]
 
-alldata = mapply(getData,links[-which(case_ls=="unknown")][18],case_ls[-which(case_ls=="unknown")][18])
+alldata = mapply(getData,links[-which(case_ls=="unknown")],case_ls[-which(case_ls=="unknown")])
 #class(alldata)
-colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")][18]
+colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")]
 
 getDataframe <-function(alldata){
   lengths<-sapply(alldata[1,],length)
