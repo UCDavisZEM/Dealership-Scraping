@@ -10,6 +10,7 @@ library(RCurl)
 #url = "http://www.toyotaofbristol.com/exotic-new-inventory/index.htm"
 #url = "http://www.commonwealthchevrolet.com/new-inventory/index.htm"
 #url = "https://www.liatoyotaofwilbraham.com/new-inventory/index.htm"
+
 #grab the linklist
 
 
