@@ -6,21 +6,22 @@ library(ggplot2)
 
 # Define a server for the Shiny app
 shinyServer(function(input, output) {
-  
+ 
   #man -> make, cyl -> dealer, trans -> model
   # Filter data based on selections
   output$table <- renderDataTable({
-    data <- chev_df
+    #data <- df
+    load('df.RData')
     if (input$man != "All"){
-      data <- data[data$Make == input$man,]
+      df <- df[df$Make == input$man,]
     }
     if (input$dealer != "All"){
-      data <- data[data$Dealership == input$dealer,]
+      df <- df[df$Dealership == input$dealer,]
     }
     if (input$model != "All"){
-      data <- data[data$Model == input$model,]
+      df <- df[df$Model == input$model,]
     }
-    data
+    df
   })
   
 })

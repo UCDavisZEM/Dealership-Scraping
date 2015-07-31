@@ -47,7 +47,7 @@ scrapeInfo.8 <- function(links)
   model = gsub(".*-[0-9]{4}-.*-(.*?)-.*",'\\1',links)
   trim = rep(NA,length(links))
   year = gsub(".*([0-9]{4}).*",'\\1',links)
-  df <- data.frame(vins,make,model,trim, year)
+  df <- data.frame(vins,make,model,trim, year,stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model","Trim", "Year")
   return(df)
 } 

@@ -1,9 +1,9 @@
 library(shiny)
 
 # Load the ggplot2 package which provides
-# the 'chev_df' dataset.
+# the 'df' dataset.
 library(ggplot2)
-
+load('df.RData')
 # Define the overall UI
 shinyUI(
   fluidPage(
@@ -15,22 +15,22 @@ shinyUI(
              selectInput("man", 
                          "Manufacturer:", 
                          c("All", 
-                           unique(as.character(chev_df$manufacturer))))
+                           unique(as.character(df$Make))))
       ),
       column(4, 
              selectInput("dealer", 
                          "Dealership:", 
                          c("All", 
-                           unique(as.character(chev_df$Dealership))))
+                           unique(as.character(df$Dealership))))
       ),       
       column(4, 
              selectInput("model", 
                          "Model:", 
                          c("All", 
-                           unique(as.character(chev_df$Model))))
+                           unique(as.character(df$Model))))
       )       
     ),
-    # Create a new row for the table.
+    # Create a new row for the table. 
     fluidRow(
       dataTableOutput(outputId="table")
     )    
