@@ -48,7 +48,7 @@ scrapeInfo.10 <- function(url)
   }
   else{
     nodes = getNodeSet(doc, "//li[@data-incentives]")
-    templist = lapply(nodes,getdatacontent, content = "data-incentives")
+    templist = lapply(nodes,getdatacontent.10, content = "data-incentives")
     ttt = sapply(1:length(templist), 
                                  function(i) 
                                    fromJSON(templist[[i]], simplifyVector = T, simplifyDataFrame = TRUE))
