@@ -3,6 +3,11 @@
 
 #grab the linklist
 
+getdatacontent.14 = function(node, content){
+  tt = xmlAttrs(node)[content]
+  return(tt)
+}
+
 getLinklist.14 = function(url){
   require(RCurl)
   baselink = substr(url, 1, gregexpr("/",url)[[1]][3]-1)
@@ -15,25 +20,18 @@ getLinklist.14 = function(url){
   return(Linklist)
 }
 
-getdatacontent.14 = function(node, content){
-  tt = xmlAttrs(node)[content]
-  return(tt)
-}
-
 scrapeInfo.14 <- function(url)
 {
   txt = getURLContent(url, useragent = "R")
   doc = htmlParse(txt, asText = TRUE)
-  nodes = getNodeSet(doc, "//a[@id='sendToMobileLink']")
-  vins = unique(sapply(nodes,getdatacontent.6, content = "vin"))
-  name = sapply(nodes,getdatacontent.6, content = "ref")
-  tt = strsplit(name, " ")
-  make = sapply(tt, "[", 2)
-  model = "NA"
-  trim = "NA"
-  year = sapply(tt, "[", 1)
+  table = readHTMLTable(doc)[[1]][,c(-1,-6,-7,-8,-9)] #with make,year,model information
+  colnames(table)<-c('Year','Make','Model','Trim')
+  #to get vins
+  links = getHTMLLinks(doc)
+  links = unique(links[grep('[0-9A-Z]{17}.aspx',links)])
+  vins = gsub('.*([0-9A-Z]{17}).*','\\1',links)
   
-  df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
+  df <- data.frame(vins,table$Make,table$Model,table$Trim,table$Year, stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
   return(df)
 } 
@@ -41,8 +39,8 @@ scrapeInfo.14 <- function(url)
 #scrape car information from all the pages
 alldata.14 = function(url){
   require(XML)
-  links = getLinklist.6(url)
-  tt = lapply(links, scrapeInfo.6)
+  links = getLinklist.14(url)
+  tt = lapply(links, scrapeInfo.14)
   cardata = Reduce(function(x, y) rbind(x, y), tt)
   return(cardata)
 }
