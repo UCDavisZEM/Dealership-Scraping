@@ -1,5 +1,5 @@
 #library(RCurl)
-library(XML)
+#library(XML)
 #test cases 
 #url = "http://www.lundgrenhondaofgreenfield.com/inventory/newsearch/New/"
 #url = "http://www.hondacarsofboston.com/inventory/newsearch/New/"
@@ -33,7 +33,7 @@ scrapeInfo.7 <- function(url)
 {
   doc = htmlParse(url)
   nodes = getNodeSet(doc, 
-                     "//img[@alt and not(contains(@class, 'vehiclestyleimg'))]")
+                     "//img[@alt and @id and not(contains(@class, 'vehiclestyleimg'))]")
   temp = unname(sapply(nodes, getdatacontent.7, content = "alt"))
   vins = sapply(strsplit(temp, " "), tail, n = 1 )
 ##or nodes = getNodeSet(doc, "//img[@alt]");temp = unname(sapply(nodes, getdatacontent.7, content = "alt"))
@@ -45,12 +45,12 @@ scrapeInfo.7 <- function(url)
   
   df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
+#print(url)
   return(df)
 } 
 
 #scrape car information from all the pages
 alldata.7 = function(url){
-  require(XML)
   links = getLinklist.7(url)
   tt = lapply(links, scrapeInfo.7)
   cardata = Reduce(function(x, y) rbind(x, y), tt)
