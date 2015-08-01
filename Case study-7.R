@@ -5,7 +5,6 @@
 #url = "http://www.hondacarsofboston.com/inventory/newsearch/New/"
 
 
-
 getdatacontent.7 = function(node, content){
   tt = xmlAttrs(node)[content]
   return(tt)
@@ -51,7 +50,7 @@ scrapeInfo.7 <- function(url)
     
     df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
     colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
-    
+    #print(url)
     return(df) 
   }
   
