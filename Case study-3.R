@@ -10,7 +10,11 @@ library(RCurl)
 #url = "http://www.toyotaofbristol.com/exotic-new-inventory/index.htm"
 #url = "http://www.commonwealthchevrolet.com/new-inventory/index.htm"
 #url = "https://www.liatoyotaofwilbraham.com/new-inventory/index.htm"
-
+#url = "http://www.herbchambersscion.com/new-inventory/index.htm"
+#url = "www.nissan24auto.com/type/new-inventory/"
+#url = "http://www.kellynissanofbeverly.com/new-inventory/index.htm"
+#url = "https://www.lianissanenfield.com/new-inventory/"
+#url = "http://www.currynissanma.com/new-inventory/index.htm"
 #grab the linklist
 
 
@@ -23,18 +27,23 @@ getLinklist.3 = function(url){
  
   #pages are obey ?start= pattern
   index = grep("?start=",href, fixed = T)
-  
-  #number of cars per page
-  number = as.numeric(gsub(".*=([0-9]+).*", "\\1", href[index]))
-  
-  #total number of cars in new inventory
-  totalnumber = as.numeric(xpathSApply(doc, "//span[@id='current-search-count']",xmlValue))
-  #each pages start number
-  startnumber = seq(0, totalnumber-1, number)
-  #all the links 
-  Linklist = sapply(1:length(startnumber), function(i) paste0(baselink, gsub("[0-9]+", startnumber[i], href[index])))
-  return(Linklist)
+  if(length(index)==0){
+    return(url)
+  }
+  else{
+    #number of cars per page
+    number = as.numeric(gsub(".*=([0-9]+).*", "\\1", href[index]))
+    
+    #total number of cars in new inventory
+    totalnumber = as.numeric(xpathSApply(doc, "//span[@id='current-search-count']",xmlValue))
+    #each pages start number
+    startnumber = seq(0, totalnumber-1, number)
+    #all the links 
+    Linklist = sapply(1:length(startnumber), function(i) paste0(baselink, gsub("[0-9]+", startnumber[i], href[index])))
+    return(Linklist)
+  }
 }
+  
 
 
 
@@ -61,7 +70,7 @@ scrapeInfo.3 <- function(url)
   
   df <- data.frame(vins,make,model,trim, year, stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
-  #print(url)
+  ＃print(url)
   return(df)
 } 
 
