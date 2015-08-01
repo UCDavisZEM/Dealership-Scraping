@@ -14,7 +14,7 @@ source("Case study-13.R")
 source("Case study-14.R")
 
 
-link_file = read.csv("./DealerInventoryLinks//MAToyotaInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
+link_file = read.csv("./DealerInventoryLinks//MAFordInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
 links = link_file$Website
 
 
@@ -24,7 +24,7 @@ check_case <- function(link)
       case = "case1"
   else if(grepl("search/new/tp",link,ignore.case = T)) #2
       case = "case2"
-  else if(grepl("new-inventory/",link,ignore.case=T)) #3
+  else if(grepl("new-inventory(/?)$|(/index\\.html?)$",link,ignore.case=T)) #3
       case = "case3"
   else if(grepl("new_inventory",link,ignore.case=T))  #4
       case = "case4"
@@ -94,5 +94,7 @@ getDataframe <-function(alldata){
 
 #Dealership Dataframe
 alldata_df = getDataframe(alldata)
-chev_df = alldata_df
-chev_df[chev_df$Dealership=='Quirk Chevrolet',]=data
+toyota_df = alldata_df
+toyota_df[toyota_df$Dealership=='Copeland Toyota',] = head(alldata.14(url))
+save(toyota_df,file = 'toyota.RData')
+
