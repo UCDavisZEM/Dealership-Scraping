@@ -57,7 +57,7 @@ alldata.13 = function(url){
   for(url in links)
   {
     remDr$navigate(url)    
-    Sys.sleep(3)
+    Sys.sleep(4)
     txt=remDr$getPageSource()
     tt[[url]] = scrapeInfo.13(txt)
   }

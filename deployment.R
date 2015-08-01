@@ -8,8 +8,10 @@ nullToNA <- function(x) {
   return(x)
 }
 
-OEM_list = list(nullToNA(chev_df),nullToNA(toyota_df),nullToNA(smart_df))
+OEM_list = list(nullToNA(chev_df),nullToNA(toyota_df),nullToNA(smart_df),nullToNA(honda_df))
 df <- Reduce(function(x, y) rbind(x, y), OEM_list)
+df <- df[!duplicated(df$VIN),]
+
 dim(df)
 save(df,file='df.RData')
 library(shiny)

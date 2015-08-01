@@ -33,7 +33,7 @@ getLinklist.7 = function(url){
 scrapeInfo.7 <- function(url)
 {
   doc = htmlParse(url)
-  print(url)
+  #print(url)
   nodes = getNodeSet(doc, 
                      "//img[@alt and @id and not(contains(@class, 'vehiclestyleimg'))]")
   if(length(nodes)==0){
