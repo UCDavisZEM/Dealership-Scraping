@@ -2,6 +2,7 @@
 load('toyota.RData')
 load('smart.RData')
 load('chevrolet.RData')
+load('honda.RData')
 
 nullToNA <- function(x) {
   x[sapply(x, is.null)] <- NA
