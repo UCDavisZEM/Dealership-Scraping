@@ -1,4 +1,4 @@
-
+#library(XML)
 ##the only input url
 #url = "http://www.hanleesdavischevy.com/VehicleSearchResults?search=new&pageNumber=1"
 #url = "http://www.classicchevrolet.com/VehicleSearchResults?search=new"
@@ -6,6 +6,7 @@
 #doc = htmlParse(url)
 #baselink = xmlToList(doc, addAttributes = FALSE)[[1]]$base[1]
 #for try: http://www.gmautoplaza.com/VehicleSearchResults?search=new
+#url = "http://www.lannanchevy.net/VehicleSearchResults?search=new"
 
 
 #grab the next link
