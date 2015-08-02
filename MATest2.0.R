@@ -14,7 +14,7 @@ source("Case study-13.R")
 source("Case study-14.R")
 
 
-link_file = read.csv("./DealerInventoryLinks//MAFordInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
+link_file = read.csv("./DealerInventoryLinks//MANissanInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
 links = link_file$Website
 
 
@@ -95,7 +95,7 @@ getDataframe <-function(alldata){
 
 #Dealership Dataframe
 alldata_df = getDataframe(alldata)
-honda_df = alldata_df
-head(honda_df)
-save(honda_df,file = 'honda.RData')
+ford_df = alldata_df
+head(ford_df)
+save(ford_df,file = 'ford.RData')
 
