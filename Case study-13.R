@@ -40,7 +40,6 @@ scrapeInfo.13 <- function(txt)
   return(df)  
 }
 
-url="http://haddadtoyota.com/NewToyotaCars?Page=1"
 
 alldata.13 = function(url){
   require(RSelenium)

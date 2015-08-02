@@ -1,5 +1,5 @@
 #test case smart  
-url = "http://www.smartcenterboston.com/new"
+#url = "http://www.smartcenterboston.com/new"
 
 scrapeInfo.9 <- function(links)
 {

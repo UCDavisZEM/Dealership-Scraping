@@ -14,7 +14,7 @@ source("Case study-13.R")
 source("Case study-14.R")
 
 
-link_file = read.csv("./DealerInventoryLinks//MANissanInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
+link_file = read.csv("./DealerInventoryLinks//MAFordInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
 links = link_file$Website
 
 
@@ -46,7 +46,7 @@ check_case <- function(link)
       case = "case12"
   else if(grepl("/NewToyotaCars$",link,ignore.case=T))#13
       case = "case13"
-  else if(grepl("/NewToyotaCars.aspx",link,fixed=T))#13
+  else if(grepl("/NewToyotaCars.aspx",link,fixed=T))#14
       case = "case14"
   else
       case = "unknown"
@@ -82,7 +82,7 @@ link_file$Name[which(case_ls=="unknown")]
 link_file$Website[which(case_ls=="unknown")]
 
 
-alldata = mapply(getData,links[-which(case_ls=="unknown")][21:22],case_ls[-which(case_ls=="unknown")][21:22])
+alldata = mapply(getData,links[-which(case_ls=="unknown")],case_ls[-which(case_ls=="unknown")])
 #class(alldata)
 colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")]
 

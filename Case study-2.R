@@ -60,7 +60,7 @@ scrapeInfo.2 <- function(url)
                         strsplit(name[i], model[i])$content[2])})
   df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
-  print(url)
+  #print(url)
   return(df)
   }
 } 

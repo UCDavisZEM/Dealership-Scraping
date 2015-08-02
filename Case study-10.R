@@ -70,6 +70,8 @@ scrapeInfo.10 <- function(url)
 
 #scrape car information from all the pages
 alldata.10 = function(url){
+  require(jsonlite)
+  require(XML)
   links = getLinklist.10(url)
   tt = lapply(links, scrapeInfo.10)
   cardata = Reduce(function(x, y) rbind(x, y), tt)
