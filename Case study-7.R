@@ -48,7 +48,7 @@ scrapeInfo.7 <- function(url)
     trim = xpathSApply(doc,"//span[@class='trim']",xmlValue)
     year = xpathSApply(doc,"//span[@class='year']",xmlValue)
     
-    df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
+    df <- data.frame(vins,make,model,trim,year, stringsAsFactors = F)
     colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
     #print(url)
     return(df) 
