@@ -26,26 +26,20 @@ getLinklist.6 = function(url){
   return(Linklist)
 }
 
-getdatacontent.6 = function(node, content){
-  tt = xmlAttrs(node)[content]
-  return(tt)
-}
 
 scrapeInfo.6 <- function(url)
 {
   txt = getURLContent(url, useragent = "R")
   doc = htmlParse(txt, asText = TRUE)
-  nodes = getNodeSet(doc, "//a[@id='sendToMobileLink']")
-  vins = unique(sapply(nodes,getdatacontent.6, content = "vin"))
-  index = match(vins, sapply(nodes,getdatacontent.6, content = "vin"))
-  name = sapply(nodes,getdatacontent.6, content = "ref")
-  tt = strsplit(name, " ")
-  make = sapply(tt, "[", 2)[index]
+  vin_nodes = getNodeSet(doc, "//li[@class='vinDisplay']/text()")
+  vins = unlist(lapply(vin_nodes,xmlValue))
+  #tt = strsplit(name, " ")
+  make = "NA"
   model = "NA"
   trim = "NA"
-  year = sapply(tt, "[", 1)[index]
+  year = "NA"
   
-  df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
+  df <- data.frame(vins,make,model,trim,year, stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
   #print(url)
   return(df)
