@@ -1,9 +1,16 @@
 #VIN Decoder web scraping from  http://www.vindecipher.com/veyance/index.cfm?action=decode
 
 load('df.RData')
-
+install.packages("devtools")
+install.packages("Rcurl")
+install.packages("XML")
+install.packages("plyr")
+library(devtools)
+devtools::install_github("omegahat/RHTMLForms")
 library(RHTMLForms)
+library(XML)
 library(RCurl)
+library(plyr)
 
 #url = "http://www.decodethis.com/VIN-Decoded/vin/"
 url = "http://www.vindecipher.com/veyance/index.cfm?action=decode"
@@ -13,6 +20,7 @@ dform = decoder_forms$valvinForm
 #attributes(dform)
 decoder_submit = createFunction(dform) 
 
+#Approach2
 #h = getCurlHandle(cookiejar = "")
 #txt = postForm(url,vinNum='1G1YB2D73F5109332',submitBtn='Get VIN Data',curl=h,style="post",
 #               .opts = curlOptions(
@@ -22,29 +30,39 @@ decoder_submit = createFunction(dform)
 
 
 #filter the VIN list for which we need to scrape for missing information,i.e, model, make, year
-#may not necessary
+#actually not necessary
 
 
 #Web scraping function from the decoder
 vin_decoder<- function(vin_str)
 {
-    #url = "http://www.decodethis.com/VIN-Decoded/vin/1FADP5CU0FL116000"
     vin_result = decoder_submit(vin_str)
     doc = htmlParse(vin_result)
-    Sys.sleep(2)
     #/html/body/table[2]/tbody/tr[1]/td/table/tbody/tr[3]/td/table/tbody/tr[1]/td[2]
     infoNode = getNodeSet(doc,"//table/tr[@bgcolor]/td[2]/text()")
     Manufacturer = xmlValue(infoNode[[1]])
     Make = xmlValue(infoNode[[2]])
     Year = xmlValue(infoNode[[3]])
     Model = xmlValue(infoNode[[4]])
-    
-    print(paste(Manufacturer,Make,Year,Model,vin_str))
-    return(c(Manufacturer,Make,Year,Model,vin_str))
+    #print(paste(Manufacturer,Make,Year,Model,vin_str))
+    rm(doc)
+    return(data.frame(Manufacturer,Make,Year,Model,vin_str,stringsAsFactors = F))
 }
 
 vin_requests = unname(sapply(df$VIN,toString))
-allcar_ls = lapply(vin_requests[1:20],vin_decoder) 
-allcars_df = do.call('rbind',allcar_ls)
-
+#allcar_ls = lapply(vin_requests,vin_decoder) 
+#allcars_df = do.call('rbind',allcar_ls)
+allcars_df = ldply(vin_requests, function(vin_str){
+                                      #print(vin_str)
+                                      out = try(vin_decoder(vin_str))
+                                        if(class(out)=='try-error')
+                                        {
+                                          print(paste('Error VIN:',vin_str))
+                                          next
+                                        }
+                                      #random sleep interval
+                                      Sys.sleep(sample(seq(1, 4, by=0.001), 1))
+                                      return(out)
+                                    })
+colnames(allcars_df) <- c("Manufacturer","Make","Year","Model","VIN")
 save(allcars_df,file='allcars_df.RData')
