@@ -1,6 +1,6 @@
 
 #library(XML)
-#test cases
+#test case
 #url = "http://www.balisechevybuickgmc.com/new-inventory/index.htm"
 #url = "http://www.lonestarchevrolet.com/new-inventory/index.htm"
 #url = "http://www.balisehonda.com/new-inventory/index.htm"
