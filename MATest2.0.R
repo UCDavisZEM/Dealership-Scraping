@@ -95,7 +95,7 @@ getDataframe <-function(alldata){
 
 #Dealership Dataframe
 alldata_df = getDataframe(alldata)
-ford_df = alldata_df
-head(ford_df)
-save(ford_df,file = 'ford.RData')
+nissan_df = alldata_df
+head(nissan_df)
+save(nissan_df,file = 'nissan.RData')
 
