@@ -6,18 +6,16 @@
 
 getLinklist.15 = function(url){
   RSelenium::startServer()
-  checkForServer()
   remDr = remoteDriver(browserName = "firefox")
   remDr$open(silent = TRUE)
-  
   
   remDr$navigate(url) 
   
   txt=remDr$getPageSource()
-  doc = htmlParse(txt, asText = TRUE)
-  baselink =paste0(url, "#0/10/DisplayPrice/a//")
+  doc = htmlParse(txt[[1]], asText = TRUE)
+  baselink =paste0(url, "#0/30/DisplayPrice/a//")
   totalcars = as.numeric(xpathSApply(doc, "//span[@class='resultCount']", xmlValue)[1])
-  pages = length(seq(0, totalcars-1, 10))
+  pages = length(seq(0, totalcars-1, 30))
   
   linklist = sapply(0:(pages-1), function(i)gsub("\\#([0-9]+)", paste0("#", i), baselink))
   remDr$close
@@ -56,11 +54,9 @@ scrapeInfo.15 = function(url){
 alldata.15 = function(url){
   require(RSelenium)
   require(XML)
-  require(RCurl)
-  require(jsonlite)
+  require(plyr)
   links = getLinklist.15(url)
-  tt = lapply(links, scrapeInfo.15)
-  cardata = Reduce(function(x, y) rbind(x, y), tt)
+  cardata = ldply(links, scrapeInfo.15)
   return(cardata)
 }
 
