@@ -12,6 +12,11 @@ source("Case study-11.R")
 source("Case study-12.R")
 source("Case study-13.R")
 source("Case study-14.R")
+source("Case study-15.R")
+source("Case study-16.R")
+source("Case study-17.R")
+source("Case study-19.R")
+
 
 
 link_file = read.csv("./DealerInventoryLinks//MANissanInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
@@ -28,8 +33,8 @@ check_case <- function(link)
       case = "case3"
   else if(grepl("new_inventory",link,ignore.case=T))  #4
       case = "case4"
- # else if(grepl("new-vehicles",link,ignore.case=T)) #5
-  #    case = "case5"
+  else if(grepl("new-vehicles",link,ignore.case=T)) #5
+      case = "case5"
   else if(grepl("searchnew\\.aspx$",link,ignore.case=T))#6
       case = "case6"
   else if(grepl("newsearch/new",link,ignore.case=T)) #7
@@ -48,6 +53,16 @@ check_case <- function(link)
       case = "case13"
   else if(grepl("/NewToyotaCars.aspx",link,fixed=T))#14
       case = "case14"
+  else if(grepl("/inventory/new-vehicles",link,fixed=T))#15
+      case = "case15"
+  else if(grepl("/New-Inventory.aspx",link,ignore.case=T))#16
+      case = "case16"
+  else if(grepl("vehicle_type=All",link,fixed=T))#17
+      case = "case17"
+  else if(grepl("/new-.*-inventory-.*aspx",link,ignore.case=T))#19
+      case = "case19"
+  else if(grepl("/new-chevrolets.aspx$",link,ignore.case = T)) #same code with #19
+      case = "case19"
   else
       case = "unknown"
   return(case)
@@ -61,7 +76,7 @@ getData <- function(link,case)
          case2 = alldata.2(link),
          case3 = alldata.3(link),
          case4 = alldata.4(link),
-        # case5 = alldata.5(link),
+         case5 = alldata.5(link),
          case6 = alldata.6(link),
          case7 = alldata.7(link),
          case8 = alldata.8(link),
@@ -70,7 +85,11 @@ getData <- function(link,case)
          case11 = alldata.11(link),
          case12 = alldata.12(link),
          case13 = alldata.13(link),
-         case14 = alldata.14(link))
+         case14 = alldata.14(link),
+         case15 = alldata.15(link),
+         case16 = alldata.16(link),
+         case17 = alldata.17(link),
+         case19 = alldata.19(link))
 }
 #  (^http.*Cars$)
   
