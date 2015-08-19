@@ -4,7 +4,7 @@
 #url = "http://sullivanbrotherstoyota.com/inventory/view/New/"
 #url = "http://toyotaofdartmouth.com/inventory/view/New/"
 #url = "http://baystateford.com/inventory/view/New/"
-
+#url = "http://www.tasca.com/Inventory/view/Make/Ford/New/"
 getLinklist.12 = function(url){
   
   doc = htmlParse(url)
@@ -20,7 +20,7 @@ getLinklist.12 = function(url){
  index = grep("Page[0-9]+", href)
  pagelink = href[index][1]
   
-  Linklist = sapply(1:TotalPage, 
+ Linklist = sapply(1:TotalPage, 
                            function(i) paste0(baselink, 
                                               gsub("Page([0-9]+)", paste0("Page", i), pagelink)))  
   
@@ -61,9 +61,9 @@ scrapeInfo.12 <- function(url)
 
 #scrape car information from all the pages
 alldata.12 = function(url){
+  require(plyr)
   links = getLinklist.12(url)
-  tt = lapply(links, scrapeInfo.12)
-  cardata = Reduce(function(x, y) rbind(x, y), tt)
+  cardata = ldply(links, scrapeInfo.12)
   return(cardata)
 }
 #url = "http://sullivanbrotherstoyota.com/inventory/view/New/"
