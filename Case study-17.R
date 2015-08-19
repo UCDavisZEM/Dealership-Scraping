@@ -46,9 +46,9 @@ scrapeInfo.17 <- function(url)
 #scrape car information from all the pages
 alldata.17 = function(url){
   require(XML)
+  require(plyr)
   links = getLinklist.17(url)
-  tt = lapply(links, scrapeInfo.17)
-  cardata = Reduce(function(x, y) rbind(x, y), tt)
+  cardata = ldply(links, scrapeInfo.17)
   return(cardata)
 }
 
