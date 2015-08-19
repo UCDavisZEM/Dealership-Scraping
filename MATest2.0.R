@@ -16,10 +16,11 @@ source("Case study-15.R")
 source("Case study-16.R")
 source("Case study-17.R")
 source("Case study-19.R")
+source("Case study-20.R")
+source("Case study-21.R")
+source("Case study-22.R")
 
-
-
-link_file = read.csv("./DealerInventoryLinks//MANissanInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
+link_file = read.csv("./DealerInventoryLinks//MAToyotaInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
 links = link_file$Website
 
 
@@ -47,7 +48,7 @@ check_case <- function(link)
       case = "case10"
   else if(grepl("/new-cars-",link,ignore.case=T))#11
       case = "case11"
-  else if(grepl("/view/New/",link,ignore.case=T))#12
+  else if(grepl("/view/New/|/view/Make",link,ignore.case=T))#12
       case = "case12"
   else if(grepl("/NewToyotaCars$",link,ignore.case=T))#13
       case = "case13"
@@ -63,6 +64,14 @@ check_case <- function(link)
       case = "case19"
   else if(grepl("/new-chevrolets.aspx$",link,ignore.case = T)) #same code with #19
       case = "case19"
+  else if(grepl("/inventory.aspx$",link,fixed = T)) #same code with #19
+      case = "case19"
+  else if(grepl("/Inventory/",link, fixed = T)) #20
+      case = "case20"
+  else if(grepl("/web/new/",link, fixed = T)) #21
+      case = "case21"
+  else if(grepl("/new-cars/for-sale",link, fixed = T)) #22
+      case = "case22"
   else
       case = "unknown"
   return(case)
@@ -89,7 +98,10 @@ getData <- function(link,case)
          case15 = alldata.15(link),
          case16 = alldata.16(link),
          case17 = alldata.17(link),
-         case19 = alldata.19(link))
+         case19 = alldata.19(link),
+         case20 = alldata.20(link),
+         case21 = alldata.21(link),
+         case22 = alldata.22(link))
 }
 #  (^http.*Cars$)
   
