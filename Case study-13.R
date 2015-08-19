@@ -10,7 +10,6 @@ getdatacontent.13 = function(node, content){
 getLinklist.13 = function(url){
   doc = htmlParse(url)
   
-  
   lastpage = xmlAttrs( getNodeSet(doc, "//li[@class='last']/a[@href]")[[1]])["href"]
   TotalPage = as.numeric(gsub(".*Page=([0-9]+)", "\\1", lastpage))
   Linklist = unname(sapply(1:TotalPage, 
