@@ -42,7 +42,7 @@ alldata.5 = function(url){
       remDr$navigate(url)    
       Sys.sleep(4)
       txt=remDr$getPageSource()
-      tt[[url]] = test = scrapeInfo.5(txt[[1]])
+      tt[[url]] = scrapeInfo.5(txt[[1]])
     }
     df = Reduce(function(x, y) rbind(x, y), tt)
     colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
