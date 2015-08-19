@@ -1,5 +1,6 @@
 #Case 19 (this case needs to go deeper to get vins)
 #url = "http://www.stonehamford.com/new-ford-inventory-boston.aspx"
+#url = "http://www.thomasford.com/inventory.aspx"  
 
 alldata.19 = function(url){
   require(XML)
