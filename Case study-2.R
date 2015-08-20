@@ -55,9 +55,7 @@ scrapeInfo.2 <- function(url)
   
   trim.node = getNodeSet(doc, "//meta[@itemprop='name']")[-1]
   name = sapply(trim.node,getdatacontent.2)
-  trim = sapply(1:length(name), 
-                function(i){gsub("^\\s+|\\s+$", "", 
-                        strsplit(name[i], model[i])$content[2])})
+  trim = "NA"
   df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
   #print(url)
