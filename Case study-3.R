@@ -12,7 +12,7 @@
 #url = "http://www.commonwealthchevrolet.com/new-inventory/index.htm"
 #url = "https://www.liatoyotaofwilbraham.com/new-inventory/index.htm"
 #url = "http://www.herbchambersscion.com/new-inventory/index.htm"
-#url = "http://www.nissan24auto.com/type/new-inventory/"
+#url = "http://www.nissan24auto.com/type/new-inventory/"----MAKE NA
 #url = "http://www.kellynissanofbeverly.com/new-inventory/index.htm"
 #url = "https://www.lianissanenfield.com/new-inventory/index.htm"
 #url = "http://www.currynissanma.com/new-inventory/index.htm"
@@ -63,7 +63,10 @@ scrapeInfo.3 <- function(url)
   if(length(vin.node)==0){
       vin.node = getNodeSet(doc, "//text()[contains(.,'VIN#:')]")
       vins = gsub(".*([0-9A-z]{17}).*","\\1",xmlApply(vin.node, xmlValue))
-      make = "NA"
+      make.node = getNodeSet(doc, "//img[@class='p-image']")
+      name = sapply(make.node, getdatacontent.3, content = "alt")
+      tt = strsplit(name, " ")
+      make = unname(sapply(tt, "[", 2))
      }
   
   else{
