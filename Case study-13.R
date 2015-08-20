@@ -41,12 +41,12 @@ scrapeInfo.13 <- function(txt)
 
 
 alldata.13 = function(url){
-  require(RSelenium)
   require(XML)
   require(RCurl)
   require(jsonlite)
+  require(RSelenium)
+  
   RSelenium::startServer()
-  checkForServer()
   remDr = remoteDriver(browserName = "firefox")
   remDr$open(silent = TRUE)
   links = getLinklist.13(url)
