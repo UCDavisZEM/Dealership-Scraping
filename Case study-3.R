@@ -14,7 +14,7 @@
 #url = "http://www.herbchambersscion.com/new-inventory/index.htm"
 #url = "http://www.nissan24auto.com/type/new-inventory/"
 #url = "http://www.kellynissanofbeverly.com/new-inventory/index.htm"
-#url = "https://www.lianissanenfield.com/new-inventory/index.htm"
+#url = "https://www.lianissanenfield.com/new-inventory/index.htm"----MAKE NA
 #url = "http://www.currynissanma.com/new-inventory/index.htm"
 #grab the linklist
 
