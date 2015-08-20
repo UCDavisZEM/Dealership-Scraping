@@ -30,15 +30,18 @@ alldata.5 = function(url){
   {
     require(plyr)
     require(RSelenium)
-    links = getLinklist.5(url,doc)
-    
     RSelenium::startServer()
     remDr = remoteDriver(browserName = "firefox")
     remDr$open(silent = TRUE)
+    remDr$navigate(url)
+    doc = remDr$getPageSource()[[1]]
+    doc = htmlParse(doc)
+    links = getLinklist.5(url,doc)
+      
     tt = list()
     for(url in links)
     {
-      print(url)
+      #print(url)
       remDr$navigate(url)    
       Sys.sleep(4)
       txt=remDr$getPageSource()
@@ -54,7 +57,16 @@ alldata.5 = function(url){
 getLinklist.5 = function(url,doc){
   baselink = url
   #total number of cars in new inventory
-  countNode = xmlValue(getNodeSet(doc, "//div[@class='resultsCount']/h4/text()")[[1]])
+  countNode = xmlValue(getNodeSet(doc, "//td[@class='filter-results']/h4/text()")[[1]])
+  if(is.na(countNode))
+  {
+    countNode = xmlValue(getNodeSet(doc, "//span[@class='resultCount']/text()")[[1]])
+    totalnumber = as.numeric(gsub('([0-9]+).*','\\1',countNode))
+    #get how many pages
+    pagenumber = ceiling(totalnumber/30)-1
+    Linklist = sapply(0:pagenumber, function(i) paste0(baselink, "#", i, "/30/DisplayPrice/a//"))
+    return(Linklist)
+  }
   totalnumber = as.numeric(gsub('([0-9]+).*','\\1',countNode))
   #get how many pages
   pagenumber = ceiling(totalnumber/20)
@@ -67,6 +79,17 @@ scrapeInfo.5 <- function(doc)
 {
     doc = htmlParse(doc)
     vins = unique(xpathSApply(doc, "//div[@class='vehicle-overview']", xmlGetAttr,name='id'))
+    if(length(vins)==0)
+    {
+      vins = unique(xpathSApply(doc, "//div[@class='vehicleVIN']/span[@class='specValue']/text()", xmlValue))
+      names = xpathSApply(doc, "//div[@class='vehicleHeader']/text()", xmlValue)
+      tt = strsplit(names, " ")    
+      make = sapply(tt, "[", 2)
+      model = "NA"
+      trim = "NA"
+      year = sapply(tt, "[", 1)
+      return(data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F))
+    }
     num = length(xpathSApply(doc, "//div[@class='vehicle-overview']", xmlGetAttr,name='title'))
     names = xpathSApply(doc, "//div[@class='vehicle-overview']", xmlGetAttr,name='title')[seq(1,num,2)]
     tt = strsplit(names, " ")    
