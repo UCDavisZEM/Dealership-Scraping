@@ -1,0 +1,5 @@
+load("/Users/jianshizhang/Documents/GRADLIFE/summer/GSR-web/Dealership-Scraping/df.RData")
+df
+df[df$make=="Toyota", ]
+head(df)
+df[df$Make=="Toyota", ]
