@@ -2,8 +2,9 @@
 #Special case--
 #url = "http://www.quirkchevy.com/new-vehicles/"
 #url ="http://www.hondanorth.com/new-vehicles/"
-#Not solved
+#solved (different pattern)
 #url = "http://www.silkohonda.com/new-vehicles/" 
+#url = "http://www.primefordauburn.com/inventory/new-vehicles"
 
 alldata.5 = function(url){
   require(XML)
