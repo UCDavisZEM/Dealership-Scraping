@@ -57,7 +57,7 @@ getdatavin.1 = function(node){
 
 scrapeInfo.1 <- function(url)
 {
-  print(url)
+ # print(url)
   doc = htmlParse(url)
   temp = getNodeSet(doc, "//a[@data-vin]")
   vins = unique(sapply(temp,getdatavin.1))
