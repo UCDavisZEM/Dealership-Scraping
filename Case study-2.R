@@ -54,14 +54,8 @@ scrapeInfo.2 <- function(url)
   year.node = getNodeSet(doc,"//meta[@itemprop='releaseDate']")
   year = sapply(year.node,getdatacontent.2)
   
-<<<<<<< HEAD
-  trim.node = getNodeSet(doc, "//meta[@itemprop='name']")[-1]
-  name = sapply(trim.node,getdatacontent.2)
-  trim = "NA"
-=======
   trim = "NA"
   
->>>>>>> origin/master
   df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
   #print(url)
