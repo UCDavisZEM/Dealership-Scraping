@@ -57,15 +57,15 @@ check_case <- function(link)
       case = "case14"
   else if(grepl("/inventory/new-vehicles",link,fixed=T))#15
       case = "case15"
-  else if(grepl("/New-Inventory.aspx",link,ignore.case=T))#16
+  else if(grepl("/New-Inventory.aspx",link,fixed=T))#16
       case = "case16"
   else if(grepl("vehicle_type=All",link,fixed=T))#17
       case = "case17"
-  else if(grepl("/new-.*-inventory-.*aspx",link,ignore.case=T))#19
+  else if(grepl("/new-.*inventory.*aspx",link,ignore.case=T))#19
       case = "case19"
   else if(grepl("/new-chevrolets.aspx$",link,ignore.case = T)) #same code with #19
       case = "case19"
-  else if(grepl("/inventory.aspx$",link,fixed = T)) #same code with #19
+  else if(grepl("/inventory.aspx",link,fixed = T)) #same code with #19
       case = "case19"
   else if(grepl("/Inventory/",link, fixed = T)) #20
       case = "case20"
@@ -132,6 +132,7 @@ getDataframe <-function(alldata){
 
 #Dealership Dataframe
 alldata_df = getDataframe(alldata)
-nissan_df = alldata_df
-save(nissan_df,file = 'toyota.RData')
+ford_df = alldata_df
+dim(ford_df)
+save(ford_df,file = 'ford.RData')
 
