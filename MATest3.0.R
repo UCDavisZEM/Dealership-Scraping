@@ -113,7 +113,7 @@ case_ls = unname(sapply(links,check_case))
 link_file$Name[which(case_ls=="unknown")]
 link_file$Website[which(case_ls=="unknown")]
 
-if(length(which(case_ls=="unknown"))==0)
+if(length(which(case_ls=="unknown"))!=0)
 {
   nlinks = links[-which(case_ls=="unknown")]
   ncase_ls = case_ls[-which(case_ls=="unknown")]
@@ -122,17 +122,30 @@ if(length(which(case_ls=="unknown"))==0)
   ncase_ls = case_ls
 }
 
+length(nlinks)
 #scape all the dealerships
 alldata = mapply(getData,nlinks,ncase_ls)
+dim(alldata)
+names(alldata)
 #class(alldata)
 #specify all the dealerships
-colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")]
+if(class(alldata)=='list')
+  {
+    names(alldata) <- link_file$Name[-which(case_ls=="unknown")]
+}else
+  colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")]
 
 getDataframe <-function(alldata){
+  if(class(alldata)=='list')
+  {
+    lengths<-sapply(alldata,dim)
+    
+  }else{
   lengths<-sapply(alldata[1,],length)
   data.frame(Dealership=rep(colnames(alldata),lengths),
              lapply(split(alldata,rownames(alldata)[row(alldata)]), unlist),
              row.names=NULL,stringsAsFactors = F)
+  }
 }
 
 #Dealership Dataframe
