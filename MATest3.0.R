@@ -1,3 +1,4 @@
+library(RSelenium)
 source("Case study-1.R")
 source("Case study-2.R")
 source("Case study-3.R")
@@ -21,7 +22,7 @@ source("Case study-21.R")
 source("Case study-22.R")
 
 
-link_file = read.csv("./DealerInventoryLinks//MAToyotaInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
+link_file = read.csv("./DealerInventoryLinks/MANissanInventoryLinks.csv",header=TRUE,stringsAsFactors=FALSE)
 links = link_file$Website
 
 
@@ -113,25 +114,27 @@ case_ls = unname(sapply(links,check_case))
 link_file$Name[which(case_ls=="unknown")]
 link_file$Website[which(case_ls=="unknown")]
 
-if(length(which(case_ls=="unknown"))==0)
-{
-  links = links[-which(case_ls=="unknown")]
-  case_ls = case_ls[-which(case_ls=="unknown")]
+if(length(which(case_ls=="unknown"))!=0){
+  nlinks = links[-which(case_ls=="unknown")]
+  ncase_ls = case_ls[-which(case_ls=="unknown")]
+}else{
+  ncase_ls = case_ls
+  nlinks = links
 }
 
-alldata = mapply(getData,links,case_ls)
+alldata = mapply(getData,nlinks,ncase_ls)
 #class(alldata)
-colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")]
+colnames(alldata) <- link_file$Name[which(case_ls!="unknown")]
 
 getDataframe <-function(alldata){
   lengths<-sapply(alldata[1,],length)
   data.frame(Dealership=rep(colnames(alldata),lengths),
-             lapply(split(alldata,rownames(alldata)[row(alldata)]), unlist),
+            lapply(split(alldata,rownames(alldata)[row(alldata)]), unlist),
              row.names=NULL,stringsAsFactors = F)
 }
 
 #Dealership Dataframe
 alldata_df = getDataframe(alldata)
 nissan_df = alldata_df
-save(nissan_df,file = 'toyota.RData')
+save(nissan_df,file = 'nissan.RData')
 
