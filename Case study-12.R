@@ -15,11 +15,13 @@ getLinklist.12 = function(url){
   RecordsPerPage = as.numeric(xpathSApply(
     doc, "//div[@class='recordsperpage']/select/option[@selected]",xmlValue)[1])
   TotalPage = floor(TotalVehicle/RecordsPerPage)+1
+ if(TotalPage==1)
+   return(url)
   
  href = unique(getHTMLLinks(url))
  index = grep("Page[0-9]+", href)
  pagelink = href[index][1]
-  
+ 
  Linklist = sapply(1:TotalPage, 
                            function(i) paste0(baselink, 
                                               gsub("Page([0-9]+)", paste0("Page", i), pagelink)))  
