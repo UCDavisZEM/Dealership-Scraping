@@ -7,8 +7,8 @@
 #baselink = xmlToList(doc, addAttributes = FALSE)[[1]]$base[1]
 #for try: http://www.gmautoplaza.com/VehicleSearchResults?search=new
 #url = "http://www.lannanchevy.net/VehicleSearchResults?search=new"
-
-
+#url = "http://www.paulmasseeastprovidence.com/VehicleSearchResults?search=new"
+#url = "http://www.chevroletoflowell.com/VehicleSearchResults?search=new"
 #grab the next link
 
 
@@ -57,14 +57,23 @@ getdatavin.1 = function(node){
 
 scrapeInfo.1 <- function(url)
 {
+# print(url)
   doc = htmlParse(url)
   temp = getNodeSet(doc, "//a[@data-vin]")
   vins = unique(sapply(temp,getdatavin.1))
   make = xpathSApply(doc,"//span[@itemprop='manufacturer']",xmlValue)
-  model = xpathSApply(doc,"//span[@itemprop='model']",xmlValue)
-  trim = xpathSApply(doc,"//span[@itemprop='trim']",xmlValue)
-  year = xpathSApply(doc,"//span[@ itemprop='releaseDate']",xmlValue)
+  if(length(make)!=length(vins)){
+    temp = getNodeSet(doc, "//a[@data-window-pixel='vsr_title']")
+    vins = sapply(temp,getdatavin.1)
+  }
+  index = unname(nchar(vins)==17)
+  vins = vins[index]
+  make = make[index]
+  model = xpathSApply(doc,"//span[@itemprop='model']",xmlValue)[index]
+  trim = xpathSApply(doc,"//span[@itemprop='trim']",xmlValue)[index]
+  year = xpathSApply(doc,"//span[@ itemprop='releaseDate']",xmlValue)[index]
   df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
+  
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
   return(df)
 } 
