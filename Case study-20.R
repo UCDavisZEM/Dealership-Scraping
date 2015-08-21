@@ -1,7 +1,7 @@
 #Case study 20
 # url = "http://www.wallsford.com/Inventory/?cid=2"
 
-alldata.16 = function(url){
+alldata.20 = function(url){
   require(XML)
   require(plyr)
   require(RCurl)
