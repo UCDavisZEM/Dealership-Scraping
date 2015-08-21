@@ -57,15 +57,15 @@ check_case <- function(link)
       case = "case14"
   else if(grepl("/inventory/new-vehicles",link,fixed=T))#15
       case = "case15"
-  else if(grepl("/New-Inventory.aspx",link,ignore.case=T))#16
+  else if(grepl("/New-Inventory.aspx",link,fixed=T))#16
       case = "case16"
   else if(grepl("vehicle_type=All",link,fixed=T))#17
       case = "case17"
-  else if(grepl("/new-.*-inventory-.*aspx",link,ignore.case=T))#19
+  else if(grepl("/new-.*inventory.*aspx",link,ignore.case=T))#19
       case = "case19"
   else if(grepl("/new-chevrolets.aspx$",link,ignore.case = T)) #same code with #19
       case = "case19"
-  else if(grepl("/inventory.aspx$",link,fixed = T)) #same code with #19
+  else if(grepl("/inventory.aspx",link,fixed = T)) #same code with #19
       case = "case19"
   else if(grepl("/Inventory/",link, fixed = T)) #20
       case = "case20"
@@ -115,12 +115,17 @@ link_file$Website[which(case_ls=="unknown")]
 
 if(length(which(case_ls=="unknown"))==0)
 {
-  links = links[-which(case_ls=="unknown")]
-  case_ls = case_ls[-which(case_ls=="unknown")]
+  nlinks = links[-which(case_ls=="unknown")]
+  ncase_ls = case_ls[-which(case_ls=="unknown")]
+}else{
+  nlinks = links
+  ncase_ls = case_ls
 }
 
-alldata = mapply(getData,links,case_ls)
+#scape all the dealerships
+alldata = mapply(getData,nlinks,ncase_ls)
 #class(alldata)
+#specify all the dealerships
 colnames(alldata) <- link_file$Name[-which(case_ls=="unknown")]
 
 getDataframe <-function(alldata){
