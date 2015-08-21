@@ -1,5 +1,6 @@
 #Case study 16
 # url = "http://route44toyota.com/New-Inventory.aspx"
+# url = "http://www.watertownford.com/new-inventory.aspx" (different pattern)
 
 alldata.16 = function(url){
   require(XML)
@@ -15,7 +16,7 @@ getLinklist.16 = function(url){
   doc = htmlParse(txt, asText = TRUE)
 
   count = xmlValue(getNodeSet(doc,'//span[@class="PagingNumberFound"]/text()')[[1]],trim=T)
-  pagenum = ceiling(as.numeric(count)/25)
+  pagenum = ceiling(as.numeric(count)/25)  
   
   baselink = paste0(url, "?currentpage=1")
   linklist = sapply(1:pagenum,function(i) gsub("currentpage=([0-9]+)", paste0("currentpage=",i), baselink))
@@ -23,7 +24,7 @@ getLinklist.16 = function(url){
 }
 
 scrapeInfo.16 = function(url){
-  print(url)
+  #print(url)
   txt = getURLContent(url, useragent = "R")
   doc = htmlParse(txt, asText = TRUE)
   links = getHTMLLinks(doc)
