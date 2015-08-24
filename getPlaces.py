@@ -4,7 +4,9 @@ import sys
 import time
 
 #Get all the zipcodes for the requests later (done!)
-f = open('MAzipcode.csv','rb')
+#zipcode_filenames = os.listdir()
+
+f = open('CAzipcode.csv','rb')
 reader = csv.reader(f)
 headers = reader.next()
 column = {}
@@ -17,7 +19,7 @@ for row in reader:
 
 zipcode_ls = column['zip']
 city_ls = column['city']
-state = 'MA'
+state = 'CA'
 
 
 #With a list of cities in a state, we use Google Places API to scrape all the dealership information with the following format
@@ -26,37 +28,40 @@ YOUR_API_KEY = 'AIzaSyBcNm3SKtlCLq0jld7EWs3DgRHpvSjKHgU'
 
 google_places = GooglePlaces(YOUR_API_KEY)
 
-f = open('SmartMAdealers.csv','wt')
+company_list = ['Nissan','Toyota','Honda','Ford','Chevrolet','Smart']
+for company in company_list:
+	directory_str = 'DealersByState/'+company+state+'dealers.csv'
+
+f = open('DealersByState/CA/NissanCAdealers.csv','wt')
 writer = csv.writer(f)
 writer.writerow(('Name','Adress','Zipcode','City','GeoLatitude','GeoLongtitude','Website'))
 
-for zipid,city in zip(zipcode_ls,city_ls):
+for zipid,city in zip(zipcode_ls[510:],city_ls[510:]):
 	print zipid,city
 	time.sleep(1)
-	query_result = google_places.nearby_search(location= city+', MA', keyword=' Smart new car dealership '+zipid,radius=40000)
-    for place in query_result.places:
-    	print place.name
-        place.get_details()
-        writer.writerow( (place.name,place.formatted_address,zipid,city,place.geo_location['lat'],place.geo_location['lng'],place.website) )
+	query_result = google_places.nearby_search(location= city+', MA', keyword=' Nissan new car dealership '+zipid,radius=10000)
+	for place in query_result.places:
+		print place.name
+		place.get_details()
+		writer.writerow( (place.name,place.formatted_address,zipid,city,place.geo_location['lat'],place.geo_location['lng'],place.website) )
 
 
 f.close()
 
-query_result = google_places.nearby_search(location= 'Norwell, MA', keyword='Toyota new car dealership 02061',radius=10000)
-for place in query_result.places:
-	place.get_details()
-	print(place.name,place.formatted_address,zipid,city,place.geo_location['lat'],place.geo_location['lng'],place.website)
-
+#for debug, if we find HTTP:500 error
+# i.e use zipcode_ls.index('91730'), which returns 510, to find the index where the error occured
+# then subset the remaining lists to continue our scraping
+#like, zip(zipcode_ls[510:],city_ls[510:])
 
 
 
 #print open(sys.argv[1],'rt').read()
 
 
-#for testing
-for place in query_result.places:
-	print place.name
-	print place.geo_location['lat'],place.geo_location['lng']
+# #for testing
+# for place in query_result.places:
+# 	print place.name
+# 	print place.geo_location['lat'],place.geo_location['lng']
 
-for zipid,city in zip(zipcode_ls,city_ls):
-	print city+', MA'+zipid
+# for zipid,city in zip(zipcode_ls,city_ls):
+# 	print city+', MA'+zipid
