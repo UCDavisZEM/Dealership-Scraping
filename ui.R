@@ -3,7 +3,7 @@ library(shiny)
 # Load the ggplot2 package which provides
 # the 'df' dataset.
 library(ggplot2)
-load('df.RData')
+load('ndf.RData')
 # Define the overall UI
 shinyUI(
   fluidPage(
