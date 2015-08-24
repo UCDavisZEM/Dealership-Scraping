@@ -31,9 +31,9 @@ scrapeInfo.13 <- function(txt)
   vins = unname(gsub(".*([0-9A-Z]{17}).*", "\\1", temp))
   make = xpathSApply(doc, "//span[@class='field' and @itemprop='name']", xmlValue)
   model = xpathSApply(doc, "//span[@class='field' and @itemprop='model']", xmlValue)
-  trim = xpathSApply(doc, "//span[@class='field' and @itemprop='description']", xmlValue)
-  year = xpathSApply(doc, "//span[@class='field' and @itemprop='releaseDate']", xmlValue)
-  df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
+  trim = NA
+  year = NA
+  df <- data.frame(vins,make,model,trim,year, stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
   
   return(df)  
