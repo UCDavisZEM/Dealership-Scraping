@@ -80,7 +80,7 @@ scrapeInfo.3 <- function(url)
   
   model = "NA"
   trim = "NA"
-  year = as.numeric(NA)
+  year = "NA"
   
   df <- data.frame(vins,make,model,trim, year, stringsAsFactors = F)
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
