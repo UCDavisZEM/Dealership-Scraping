@@ -150,6 +150,6 @@ getDataframe <-function(alldata){
 
 #Dealership Dataframe
 alldata_df = getDataframe(alldata)
-nissan_df = alldata_df
-save(nissan_df,file = 'toyota.RData')
+chev_df = alldata_df
+save(chev_df,file = 'chevrolet.RData')
 

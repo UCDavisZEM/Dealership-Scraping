@@ -3,7 +3,8 @@ library(shiny)
 # Load the ggplot2 package which provides
 # the 'df' dataset.
 library(ggplot2)
-load('ndf.RData')
+load('madata.rdata')
+df <- madata
 # Define the overall UI
 shinyUI(
   fluidPage(

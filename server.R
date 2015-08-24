@@ -11,7 +11,8 @@ shinyServer(function(input, output) {
   # Filter data based on selections
   output$table <- renderDataTable({
     #data <- df
-    load('ndf.RData')
+    load('madata.rdata')
+    df <- madata
     if (input$man != "All"){
       df <- df[df$Make == input$man,]
     }

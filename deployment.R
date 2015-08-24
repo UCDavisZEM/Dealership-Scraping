@@ -12,13 +12,14 @@ nullToNA <- function(x) {
 }
 
 OEM_list = list(nullToNA(chev_df),nullToNA(toyota_df),nullToNA(smart_df),nullToNA(honda_df),nullToNA(ford_df),nullToNA(nissan_df))
-df <- Reduce(function(x, y) rbind(x, y), OEM_list)
-df <- df[!duplicated(df$VIN),]
-
+ndf <- Reduce(function(x, y) rbind(x, y), OEM_list)
+ndf <- ndf[!duplicated(ndf$VIN),]
+df <- ndf
 dim(df)
-save(df,file='df.RData')
+save(df,file='ndf.RData')
 library(shiny)
 runApp()
 
 library(shinyapps)
 deployApp()
+y
