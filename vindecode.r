@@ -1,4 +1,4 @@
-require(xlsx)
+#require(xlsx)
 #setwd("~/Documents/GRADLIFE/summer/GSR-web")
 
 #a = read.xlsx("vinpattern.xlsx", 1)
@@ -181,15 +181,15 @@ test.decoder = function(df){
   return(tt)
 }
 
-load("ndf.rdata")
-df$Make = toupper(df$Make)
-df$VIN = gsub("^\\s+|\\s+$", "",df$VIN)
+
+load("ndf.RData")
 testdecoder = test.decoder(df)
 
 madata = df
 madata$Year = testdecoder$Year
 madata$Trim = testdecoder$Trim
 madata$Model  = testdecoder$Model
+
 rownames(df) = NULL
 index = is.na(madata$Year)
 madata = madata[!index, ]
