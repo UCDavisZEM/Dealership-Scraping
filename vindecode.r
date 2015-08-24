@@ -13,11 +13,12 @@ require(xlsx)
 #toyotavin = VinPattern[VinPattern$make=='TOYOTA',]
 #hondavin = VinPattern[VinPattern$make=='HONDA',]
 #nissanvin = VinPattern[VinPattern$make=='NISSAN',]
+#smartvin = VinPattern[VinPattern$make=='SMART',]
 #yearvin = data.frame(c("A","B","C","D","E","F","G"))
 #names(yearvin) = "vincode"
 #yearvin$year = 2010:2016
 
-#save(VinPattern, fordvin, chevroletvin, chev.p, chev.t, toyotavin, hondavin, nissanvin, yearvin, file = "vindecoder.rda")
+#save(VinPattern, fordvin, chevroletvin, chev.p, chev.t, toyotavin, hondavin, nissanvin, smartvin, yearvin, file = "vindecoder.rda")
 
 load("vindecoder.rda")
 
@@ -31,7 +32,7 @@ getinfo.ford = function(VIN){
   index = fordvin$vin == info.vin
   model = fordvin$model[index][1]
   trim = fordvin$trim[index][1]
-  return(c(year = year, model = model, trim = trim))
+  return(c(Year = year, Model = model, Trim = trim))
 }
 #getinfo.ford(VIN)
 
@@ -46,7 +47,7 @@ getinfo.honda = function(VIN){
   index = hondavin$vin == info.vin
   model = hondavin$model[index][1]
   trim = hondavin$trim[index][1]
-  return(c(year = year, model = model, trim = trim))
+  return(c(Year = year, Model = model, Trim = trim))
 }
 
 ##NISSAN MATCH
@@ -60,7 +61,7 @@ getinfo.nissan = function(VIN){
   index = nissanvin$vin == info.vin
   model = nissanvin$model[index][1]
   trim = nissanvin$trim[index][1]
-  return(c(year = year, model = model, trim = trim))
+  return(c(Year = year, Model = model, Trim = trim))
 }
 #getinfo.nissan(VIN)
 
@@ -76,14 +77,14 @@ getinfo.toyota = function(VIN){
   index = toyotavin$vin == info.vin
   model = toyotavin$model[index][1]
   trim = toyotavin$trim[index][1]
-  return(c(year = year, model = model, trim = trim))
+  return(c(Year = year, Model = model, Trim = trim))
 }
 #getinfo.toyota(VIN)
 
 ##CHEVROLET
 #make = "CHEVROLET"
-#VIN = "3N63M0YN0FK709902"
-getinfo.chevronlet = function(VIN){
+#VIN = "KL7CJKSB2FB125726"
+getinfo.chevrolet = function(VIN){
   vin.year = substr(VIN, 10, 10)
   year = yearvin$year[which(yearvin$vincode == vin.year)]
   info.vin = substr(VIN,4,6)
@@ -106,11 +107,22 @@ getinfo.chevronlet = function(VIN){
     model = chev.t$model[index][1]
     trim = chev.t$trim[index][1]
   }
-  return(c(year = year, model = model, trim = trim))
+  return(c(Year = year, Model = model, Trim = trim))
 }
+getinfo.chevrolet(VIN)
 
-
-
+####SMART MATCH
+VIN = "WMEEJ9AA4FK840778"
+getinfo.smart = function(VIN){
+  vin.year = substr(VIN, 10, 10)
+  year = yearvin$year[which(yearvin$vincode == vin.year)]
+  info.vin = substr(VIN,4,7)
+  index = smartvin$vin == info.vin
+  model = smartvin$model[index][1]
+  trim = smartvin$trim[index][1]
+  return(c(Year = year, Model = model, Trim = trim))
+}
+#getinfo.smart(VIN)
 
 ######Main 
 
@@ -122,31 +134,42 @@ getinfo = function(make, VIN){
     model = "NA"
   }
   else if(make=="CHEVROLET"){
-    year = as.numeric(getinfo.chevronlet(VIN)["year"])
-    trim = getinfo.chevronlet(VIN)["trim"]
-    model = getinfo.chevronlet(VIN)["model"]
+    year = as.numeric(getinfo.chevrolet(VIN)["Year"])
+    trim = getinfo.chevrolet(VIN)["Trim"]
+    model = getinfo.chevrolet(VIN)["Model"]
   }
   else if(make=="FORD"){
-    year = as.numeric(getinfo.ford(VIN)["year"])
-    trim = getinfo.ford(VIN)["trim"]
-    model = getinfo.ford(VIN)["model"]
+    year = as.numeric(getinfo.ford(VIN)["Year"])
+    trim = getinfo.ford(VIN)["Trim"]
+    model = getinfo.ford(VIN)["Model"]
   }
   else if(make=="NISSAN"){
-    year = as.numeric(getinfo.nissan(VIN)["year"])
-    trim = getinfo.nissan(VIN)["trim"]
-    model = getinfo.nissan(VIN)["model"]
+    year = as.numeric(getinfo.nissan(VIN)["Year"])
+    trim = getinfo.nissan(VIN)["Trim"]
+    model = getinfo.nissan(VIN)["Model"]
   }
   else if(make=="HONDA"){
-    year = as.numeric(getinfo.honda(VIN)["year"])
-    trim = getinfo.honda(VIN)["trim"]
-    model = getinfo.honda(VIN)["model"]
+    year = as.numeric(getinfo.honda(VIN)["Year"])
+    trim = getinfo.honda(VIN)["Trim"]
+    model = getinfo.honda(VIN)["Model"]
   }
   else if(make=="TOYOTA"){
-    year = as.numeric(getinfo.toyota(VIN)["year"])
-    trim = getinfo.toyota(VIN)["trim"]
-    model = getinfo.toyota(VIN)["model"]
+    year = as.numeric(getinfo.toyota(VIN)["Year"])
+    trim = getinfo.toyota(VIN)["Trim"]
+    model = getinfo.toyota(VIN)["Model"]
   } 
-  return(c(year = year, model = model, trim = trim, VIN = VIN))
+  else if(make == "SMART"){
+    year = as.numeric(getinfo.smart(VIN)["Year"])
+    trim = getinfo.smart(VIN)["Trim"]
+    model = getinfo.smart(VIN)["Model"] 
+  }
+  else if(!make %in% c("SMART", "TOYOTA", "HONDA", "NISSAN", "FORD","CHEVROLET")){
+    year = NA
+    model = "NA"
+    trim = "NA"
+  }
+
+  return(c(Year = year, Model = model, Trim = trim, VIN = VIN))
 }
 
 test.decoder = function(df){
@@ -158,12 +181,16 @@ test.decoder = function(df){
   return(tt)
 }
 
-load("df.rdata")
+load("ndf.rdata")
 df$Make = toupper(df$Make)
+df$VIN = gsub("^\\s+|\\s+$", "",df$VIN)
 testdecoder = test.decoder(df)
 
-df$Year = testdecoder$year
-df$Trim = testdecoder$trim
-df$Model  = testdecoder$model
+madata = df
+madata$Year = testdecoder$Year
+madata$Trim = testdecoder$Trim
+madata$Model  = testdecoder$Model
 rownames(df) = NULL
-save(df, file = "newdf.rdata")
+index = is.na(madata$Year)
+madata = madata[!index, ]
+save(madata, file = "madata.rdata")
