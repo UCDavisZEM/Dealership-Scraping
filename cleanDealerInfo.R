@@ -17,3 +17,5 @@ dealerinfo <- dealerinfo  %>%
 #extract the zipcode for each dealerships
 dealerinfo$zipcode = gsub('.*([0-9]{5}).*','\\1',dealerinfo$Address)
 head(dealerinfo)
+
+save(dealerinfo,file='dealerinfo.rdata')
