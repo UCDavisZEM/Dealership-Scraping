@@ -23,12 +23,14 @@ shinyUI(
                          "Dealership:", 
                          c("All", 
                            unique(as.character(df$Dealership))))
+             selectInput()
       ),       
       column(4, 
              selectInput("model", 
                          "Model:", 
                          c("All", 
                            unique(as.character(df$Model))))
+  
       )       
     ),
     # Create a new row for the table. 
