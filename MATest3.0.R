@@ -51,8 +51,8 @@ check_case <- function(link)
       case = "case11"
   else if(grepl("/view/New/|/view/Make",link,ignore.case=T))#12
       case = "case12"
-  else if(grepl("/NewToyotaCars$",link,ignore.case=T))#13
-      case = "case13"
+ # else if(grepl("/NewToyotaCars$",link,ignore.case=T))#13
+  #    case = "case13"
   else if(grepl("/NewToyotaCars.aspx",link,fixed=T))#14
       case = "case14"
   else if(grepl("/inventory/new-vehicles",link,fixed=T))#15
@@ -150,6 +150,6 @@ getDataframe <-function(alldata){
 
 #Dealership Dataframe
 alldata_df = getDataframe(alldata)
-chev_df = alldata_df
-save(chev_df,file = 'chevrolet.RData')
+toyota_df = alldata_df
+save(toyota_df,file = 'toyota.RData')
 

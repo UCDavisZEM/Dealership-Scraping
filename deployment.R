@@ -17,6 +17,9 @@ ndf <- ndf[!duplicated(ndf$VIN),]
 df <- ndf
 dim(df)
 save(df,file='ndf.RData')
+
+
+# RShiny deployment
 library(shiny)
 runApp()
 
