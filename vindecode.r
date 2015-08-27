@@ -1,25 +1,3 @@
-require(xlsx)
-#setwd("~/Documents/GRADLIFE/summer/GSR-web")
-
-#a = read.xlsx("vinpattern.xlsx", 1)
-#VinPattern = a[,1:7]
-#VinPattern$make = toupper(VinPattern$make)
-#VinPattern$model = toupper(VinPattern$model)
-#VinPattern$trim = toupper(VinPattern$trim)
-#VinPattern$EV = as.character(VinPattern$EV)
-#fordvin = VinPattern[VinPattern$make=='FORD',]
-#chevroletvin = VinPattern[VinPattern$make=='CHEVROLET',]
-#chev.p = chevroletvin[chevroletvin$location == "4,5",]
-#chev.t = chevroletvin[chevroletvin$location == "5,6",]
-#toyotavin = VinPattern[VinPattern$make=='TOYOTA',]
-#hondavin = VinPattern[VinPattern$make=='HONDA',]
-#nissanvin = VinPattern[VinPattern$make=='NISSAN',]
-#smartvin = VinPattern[VinPattern$make=='SMART',]
-#yearvin = data.frame(c("A","B","C","D","E","F","G"))
-#names(yearvin) = "vincode"
-#yearvin$year = 2010:2016
-
-#save(VinPattern, fordvin, chevroletvin, chev.p, chev.t, toyotavin, hondavin, nissanvin, smartvin, yearvin, file = "vindecoder.rda")
 
 load("vindecoder.rda")
 
