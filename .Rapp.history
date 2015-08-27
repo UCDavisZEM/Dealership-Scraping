@@ -3,3 +3,4 @@ df
 df[df$make=="Toyota", ]
 head(df)
 df[df$Make=="Toyota", ]
+load("/Users/jianshizhang/Documents/GRADLIFE/summer/GSR-web/Dealership-Scraping/madata.rdata")
