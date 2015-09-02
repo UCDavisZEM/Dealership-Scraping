@@ -1,11 +1,12 @@
 #Collect all the nation-wide Chevrolet dealerships with information about name, address, website, inventory link and geo location
-require(XML)
-require(plyr)
-require(string)
+install.packages("XML", repos = "http://cran.cnr.Berkeley.edu/")
+library(XML)
+install.packages("plyr", repos = "http://cran.cnr.Berkeley.edu/")
+library(plyr)
 
 load("zipdata.rdata")
 cities = unique(zipdata$city)
-length(cities)
+#length(cities)
 
 cities = gsub(' ','',cities)
 #eg. url = "http://www.chevydealer.com/SanDiego/dealers"
