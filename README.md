@@ -2,7 +2,7 @@
 
 This project aims to apply web scraping to collect vehicle information from local dealerships websites in the U.S. RShiny Dashboard
 integrates interactive visualization to show the vehicle sales market in U.S from the local dealerships perspective. This project is
-started at May,2015, and supervised by Dr.Gustavo Collantes at the UC Davis Policy Institute. This project provide scientific evidence-based 
+started at May,2015, and supervised by Dr.Gustavo Collantes at the UC Davis Policy Institute. This project provides scientific evidence-based 
 supports for the [Zero Emission Market Acceleration Partnerships Initiative](http://zeroemissionmap.ucdavis.edu/) led by UC Davis. 
 
 ## Strategies
