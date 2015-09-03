@@ -12,7 +12,7 @@ link and even inventory links(if they exists)
 2. We use Google Place API to further integrate the information of geo-locations(Latitude,Longitude) and inventory links(if NA from the last step).
 3. Through our experiments and test case, we summarise and break down web-scraping cases based on their common url patterns in inventory links.
 4. After we tackled each case study of web scraping, we can integrate them to a scraper.
-5. We design our visualization and [Shiny dashboard](https://rshiny-jp.shinyapps.io/EVdashboard) and delpoy on the RShiny server.
+5. We design our visualization and [Shiny dashboard](https://rshiny-jp.shinyapps.io/EVdashboard) to delpoy on the RShiny server.
 
 ## Credits
 
