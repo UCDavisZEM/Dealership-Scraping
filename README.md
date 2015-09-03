@@ -1,4 +1,4 @@
-# ${Web Scraping &Visualization for the vehicle sales market in U.S}
+# Web Scraping &Visualization for the vehicle sales market in U.S
 
 This project aims to apply web scraping to collect vehicle information from local dealerships websites in the U.S. RShiny Dashboard
 integrates interactive visualization to show the vehicle sales market in U.S from the local dealerships perspective. This project is
@@ -16,8 +16,8 @@ link and even inventory links(if they exists)
 
 ## Credits
 
-[Jiaping Zhang](https://github.com/jpzhangvincent)
-[Jianshi Zhang](https://github.com/JaneJianshi)
++ [Jiaping Zhang](https://github.com/jpzhangvincent)
++ [Jianshi Zhang](https://github.com/JaneJianshi)
 
 ## Further Work
 
