@@ -13,9 +13,9 @@ cities = gsub(' ','',cities)
 allsearchpages = unname(sapply(cities, function(city_str) paste0("http://www.chevydealer.com/", city_str,"/dealers")))
 
 getdealerinfo<- function(url){
-  print(url)
-  doc = htmlParse(url)
+ # print(url) 
   tryCatch({
+      doc = htmlParse(url)
       dealerNameNodes = getNodeSet(doc,'//div[@class="dealer-name-and-address"]/a[@class="dealer-name"]/span/text()')
       dealerName = xmlSApply(dealerNameNodes,xmlValue,trim=T)
       
@@ -54,8 +54,11 @@ getdealerinfo<- function(url){
 #url2 = "http://www.chevydealer.com/NewYork/dealers"
 
 chevroletDealers = ldply(allsearchpages, function(url){
-                                          delayedAssign('do.next',{next})
-                                          tryCatch(getdealerinfo(url), error=function(e) force(do.next))
-                                          })
-save(chevroletDealers, file="chevroletDealers.rdata")
-                                              
+                                                      out = try(getdealerinfo(url))
+                                                      if(class(out)=='try-error') next;
+                                                      return(out)
+                                                      }, .progress = "text" )
+ChevroletDealers = chevroletDealers[!duplicated(chevroletDealers$Dealer),]
+save(ChevroletDealers, file="chevroletDealers.rdata")
+
+head(ChevroletDealers)
