@@ -1,6 +1,9 @@
 
 #-----------------------------------------------
 # Scrape the inventory links from Google search result page
+install.packages("XML", repos = "http://cran.cnr.Berkeley.edu/")
+install.packages("RHTMLForms", repos = "http://cran.cnr.Berkeley.edu/")
+
 library(RHTMLForms)
 library(XML)
 google= "http://www.google.com"
