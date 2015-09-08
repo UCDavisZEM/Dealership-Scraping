@@ -28,10 +28,10 @@ getdealerinfo<- function(url){
       stateNodes = getNodeSet(doc,'//div[@class="cityStateZip"]/span[2]/text()')
       stateName = xmlSApply(stateNodes,xmlValue,trim=T)
       
-      dealerAddress = paste0(roadName,', ',cityName,', ',stateName,' ',zipcode)
-      
       zipcodeNodes = getNodeSet(doc,'//div[@class="cityStateZip"]/span[3]/text()')
       zipcode = xmlSApply(zipcodeNodes,xmlValue,trim=T)
+      
+      dealerAddress = paste0(roadName,', ',cityName,', ',stateName,' ',zipcode)
       
       dealerWebsiteNodes = getNodeSet(doc,"//div[@class='dealer-name-and-address']/a")
       dealerWebsite = unlist(lapply(xmlSApply(dealerWebsiteNodes,xmlGetAttr,"href")[-c(1,2)],gsub,patter='(.*/).*',replacement='\\1'))
