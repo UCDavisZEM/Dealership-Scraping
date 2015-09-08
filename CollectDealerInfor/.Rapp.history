@@ -1,0 +1,4 @@
+load("/Users/jianshizhang/Documents/GRADLIFE/summer/GSR-web/Dealership-Scraping/CollectDealerInfor/bmwDealers.rdata")
+head(BMWDealers)
+load("/Users/jianshizhang/Documents/GRADLIFE/summer/GSR-web/Dealership-Scraping/CollectDealerInfor/bmwDealers.rdata")
+head(BMWDealers)
