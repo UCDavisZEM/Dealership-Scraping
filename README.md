@@ -8,7 +8,7 @@ supports for the [Zero Emission Market Acceleration Partnerships Initiative](htt
 ## Strategies
 
 1. We collect local dealership information from the manufacturers' websites to collect all nationwide dealerships information about dealer name, address, website
-link and even inventory links(if they exists)
+link and even inventory links(if they exist)
 2. We use Google Place API to further integrate the information of geo-locations(Latitude,Longitude) and inventory links(if NA from the last step).
 3. Through our experiments and test case, we summarise and break down web-scraping cases based on their common url patterns in inventory links.
 4. After we tackled each case study of web scraping, we can integrate them to a scraper.
