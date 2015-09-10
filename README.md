@@ -1,4 +1,4 @@
-# Web Scraping &Visualization for the vehicle sales market in U.S
+# Web Scraping &Visualization for the Vehicle Sales Market in the U.S
 
 This project aims to apply web scraping to collect vehicle information from local dealerships websites in the U.S. RShiny Dashboard
 integrates interactive visualization to show the vehicle sales market in U.S from the local dealerships perspective. This project is
