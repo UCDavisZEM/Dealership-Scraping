@@ -65,16 +65,11 @@ save(ChevroletDealers, file="chevroletDealers.rdata")
 
 head(ChevroletDealers)
 
+=============================#further cleaning
 require(RSelenium)
 RSelenium::startServer()
 remDr = remoteDriver(browserName = "firefox")
 remDr$open(silent = TRUE)
-
-remDr$navigate(url) 
-
-webElem <- remDr$findElement(using = 'id',value="zip")
-webElem$sendKeysToElement(list("36801","\uE007"))
-doc <- remDr$getPageSource()[[1]]
 
 getDealerInforInRS = function(doc){
   doc = htmlParse(doc)
@@ -110,5 +105,13 @@ getDealerInforInRS = function(doc){
   colnames(df) = c("Dealer","Address","Link","zipcode","IV_link", "Latitude", "Longitude")
   return(df)
 }
+remDr$navigate(url) 
 
-testdf = getDealerInforInRS(doc)
+dataset = ldply(aa, .progress = T, function(zip){ 
+    print(zip)
+    webElem <- remDr$findElement(using = 'id',value="zip")
+    webElem$sendKeysToElement(list(zip,"\uE007"))
+    doc <- remDr$getPageSource()[[1]]
+    return(getDealerInforInRS(doc))
+})
+
