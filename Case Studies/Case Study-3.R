@@ -109,6 +109,7 @@ alldata.3 = function(url){
     return(cardata)
   })
 }
+
 #cc = alldata.3(url)
 
 
