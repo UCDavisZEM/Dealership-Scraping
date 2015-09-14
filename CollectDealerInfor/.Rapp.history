@@ -2,3 +2,19 @@ load("/Users/jianshizhang/Documents/GRADLIFE/summer/GSR-web/Dealership-Scraping/
 head(BMWDealers)
 load("/Users/jianshizhang/Documents/GRADLIFE/summer/GSR-web/Dealership-Scraping/CollectDealerInfor/bmwDealers.rdata")
 head(BMWDealers)
+load("/Users/jianshizhang/Documents/GRADLIFE/summer/GSR-web/Dealership-Scraping/CollectDealerInfor/nChevydata.rdata")
+dim(nChevydata)
+list()
+list.files()
+ls()
+dim(nChevy)
+aa = nChevy(!dumplicated(nChevy), )
+aa = nChevy[!dumplicated(nChevy), ]
+aa = nChevy[!dunplicated(nChevy), ]
+aa = nChevy[!duplicated(nChevy), ]
+dim(aa)
+table(nChevy$zipcode)
+which(nChevy$zipcode=="64055")
+nChevy[c(1625, 3700),]
+load("/Users/jianshizhang/Documents/GRADLIFE/summer/GSR-web/Dealership-Scraping/CollectDealerInfor/chevroletDealers.rdata")
+load("/Users/jianshizhang/Documents/GRADLIFE/summer/GSR-web/toyotadealer.rdata")
