@@ -107,11 +107,15 @@ getDealerInforInRS = function(doc){
 }
 remDr$navigate(url) 
 
-dataset = ldply(aa, .progress = T, function(zip){ 
+ndataset = list()
+i=0
+for(zip in aa){
+    i = i+1
     print(zip)
     webElem <- remDr$findElement(using = 'id',value="zip")
     webElem$sendKeysToElement(list(zip,"\uE007"))
     doc <- remDr$getPageSource()[[1]]
-    return(getDealerInforInRS(doc))
-})
+    ndataset[[i]] = getDealerInforInRS(doc)
+    webElem$clearElement()
+}
 
