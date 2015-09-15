@@ -324,11 +324,11 @@ scrapeInventoryLink <- function(request)
 {
   doc = google_submit(request)
   #set the longer system sleeping time to avoid the risk of being blocked by Google
-  Sys.sleep(15)
+  Sys.sleep(2)
   urls = get_google_page_urls(doc)
   urls = url_trim(urls)
   #IV_link = clean_links(urls)
-  Sys.sleep(15)
+  Sys.sleep(2)
   print(urls[1]) #for testing and debugging
   return(urls)
 }
@@ -337,7 +337,7 @@ scrapeInventoryLink <- function(request)
 load("nissanDealers.rdata")
 #maDealersLinks$Website[maDealersLinks$Name%in%mainDealers][48] = "http://baystateford.com/"
 requests = as.vector(sapply(NissanDealers$Link,conSearchString))
-inventoryLinks[351:400] = lapply(requests[351:400], scrapeInventoryLink) #there are some unrelevant links in it
+inventoryLinks[968:1074] = lapply(requests[968:1074], scrapeInventoryLink) #there are some unrelevant links in it
 save(inventoryLinks,file="possiblelinks.rdata")
 
 #The complet list of authorized local dealerships' inventory links
