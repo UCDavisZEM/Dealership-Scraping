@@ -47,7 +47,7 @@ scrapeInfo.15 = function(url){
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
   
   remDr$close
-  print(url)
+  #print(url)
   return(df)
 }
 
