@@ -1,7 +1,8 @@
 ###percentage by make
 load("finalMA.rdata")
 library(ggplot2)
-
+library(dplyr)
+library(leaflet)
 
 testdata = madata
 tt = group_by(testdata, county_name)
@@ -18,8 +19,7 @@ aa = summarise(tt, numCar = n(), zipcode = unique(zipcode)[1], numEV = sum(isEV)
        #        numPRIUS = sum(testdata$Type[testdata$Type=="PHEV" & testdata$Model =="PRIUS HYBRID"]))
 
 m1 = leaflet(aa) %>% 
-  addTiles(urlTemplate = "//{s}.tiles.mapbox.com/v3/jcheng.map-5ebohr46/{z}/{x}/{y}.png",
-           attribution = 'Maps by <a href="http://www.mapbox.com/">Mapbox</a>') %>%
+  addTiles() %>%
   addCircles(lng = ~Longitude, lat = ~Latitude, weight = 1,
              radius = ~sqrt(numCar) * 100, popup = ~paste(sep = "<br/>", paste0("<strong>", county_name,"</strong>"),  paste0("PEV: ", numPEV), paste0("Car: ", numCar))
   ) 

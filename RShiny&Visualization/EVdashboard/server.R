@@ -199,13 +199,15 @@ shinyServer(function(input, output) {
   })
   
   output$map <- renderLeaflet({
-    test <- madata %>%
-              select(Dealership, Address, GeoLatitude, GeoLongitude) %>%
-              distinct()
+    test <- madata %>% group_by(county_name) %>%
+            summarise(numCar = n(), zipcode = unique(zipcode)[1], numEV = sum(isEV), numPEV = sum(Type %in% c("PHEV", "BEV")),numPHEV = sum(Type %in% c("PHEV")), numBEV = sum(Type %in% c("BEV")),  Longitude = mean(GeoLongitude), Latitude = mean(GeoLatitude), state = unique(state), 
+                numFord = sum(Make=="FORD"), numNissan = sum(Make=="NISSAN"), numSmart = sum(Make=="SMART"), numToyota = sum(Make=="TOYOTA"), numHonda = sum(Make=="HONDA"), numChevy = sum(Make=="CHEVROLET"))
     
-    leaflet(test[1:50,],padding = c(0,0,0,100)) %>%
+    leaflet(test,padding = c(0,0,0,100)) %>%
       addTiles() %>%
-      addMarkers(lng = ~GeoLongitude, lat = ~GeoLatitude)
+      addCircles(lng = ~Longitude, lat = ~Latitude, weight = 1,
+                 radius = ~sqrt(numCar) * 100, popup = ~paste(sep = "<br/>", paste0("<strong>", county_name,"</strong>"),  paste0("PEV: ", numPEV), paste0("Car: ", numCar))
+      )
   })
   
 })
