@@ -1,4 +1,4 @@
-
+#url = "http://www.bmwconcord.com/all-inventory/index.htm"
 #library(XML)
 #test case
 #url = "http://www.balisechevybuickgmc.com/new-inventory/index.htm"
@@ -17,6 +17,8 @@
 #url = "https://www.lianissanenfield.com/new-inventory/index.htm"
 #url = "http://www.currynissanma.com/new-inventory/index.htm"
 #url = "http://www.jackmaddenfordsales.com/new-inventory/index.htm"
+
+#url = "http://www.bmwconcord.com/all-inventory/index.htm"
 #grab the linklist
 source("Case study-10.R")
 
