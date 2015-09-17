@@ -1,15 +1,17 @@
 ##Case study 25
-#pattern new-cars.aspx
+#pattern new-cars.aspx/bmw.aspx
 library(RCurl)
 #url = "http://www.hondaofdanbury.com/new-cars.aspx"
 #url = "http://www.bmwnorthscottsdale.com/new-cars.aspx"
+#url = "http://www.bmwofontario.com/bmw.aspx"
+#url = "http://www.bmwofsandiego.com/bmw.aspx"
 getdatacontent.25 = function(node, content){
   tt = xmlAttrs(node)[content]
   return(tt)
 }
 
 getLinklist.25 = function(url){
-  baselink = paste0(substr(url, 1, gregexpr("/",url)[[1]][3]), "new-cars.aspx")
+  baselink = url
   txt = getURLContent(url, useragent = "R")
   doc = htmlParse(txt, asText = TRUE)
   totalpage = max(as.numeric(unique(xpathSApply(doc, "//div[@class='PageBox']", xmlValue))))
