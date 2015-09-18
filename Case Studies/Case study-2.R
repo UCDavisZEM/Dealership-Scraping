@@ -4,13 +4,15 @@
 
 #url = "http://www.harr.com/search/new/tp/"
 #url = "http://www.herbconnollychevrolet.com/search/new/tp/"
-
+#url = "http://www.bmwps.com/search/new-bmw/tp-mk8/"
 #grab the linklist
 
 #small function to get page links
 getLinklist.2 = function(url){
   baselink = substr(url, 1, gregexpr("/",url)[[1]][3]-1)
-  href = unique(getHTMLLinks(url))
+  txt = getURLContent(url, useragent = "R")
+  doc = htmlParse(txt, asText = TRUE)
+  href = unique(getHTMLLinks(doc))
   index = gregexpr("/",url)[[1]]
   pattern = substr(url, index[3],nchar(url) )
   temp = href[grep(pattern,href)]
@@ -37,7 +39,8 @@ getdatacontent.2 = function(node){
 
 scrapeInfo.2 <- function(url)
 {
-  doc = htmlParse(url)
+  txt = getURLContent(url, useragent = "R")
+  doc = htmlParse(txt, asText = TRUE)
   
   vin.node = getNodeSet(doc, "//meta[@itemprop='serialNumber']")
   vins = unique(sapply(vin.node,getdatacontent.2))
@@ -48,12 +51,9 @@ scrapeInfo.2 <- function(url)
   make.node = getNodeSet(doc, "//meta[@itemprop='manufacturer']")
   make = sapply(make.node,getdatacontent.2)
   
-  model.node = getNodeSet(doc, "//meta[@itemprop='model']")
-  model = sapply(model.node,getdatacontent.2)
   
-  year.node = getNodeSet(doc,"//meta[@itemprop='releaseDate']")
-  year = sapply(year.node,getdatacontent.2)
-  
+  model = "NA"
+  year = NA
   trim = "NA"
   
   df <- data.frame(vins,make,model,trim,as.numeric(year), stringsAsFactors = F)
