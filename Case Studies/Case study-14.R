@@ -25,13 +25,26 @@ scrapeInfo.14 <- function(url)
   txt = getURLContent(url, useragent = "R")
   doc = htmlParse(txt, asText = TRUE)
   table = readHTMLTable(doc)[[1]][,c(-1,-6,-7,-8,-9)] #with make,year,model information
-  colnames(table)<-c('Year','Make','Model','Trim')
-  #to get vins
-  links = getHTMLLinks(doc)
-  links = unique(links[grep('[0-9A-Z]{17}.aspx',links)])
-  vins = gsub('.*([0-9A-Z]{17}).*','\\1',links)
-  
-  df <- data.frame(vins,table$Make,table$Model,table$Trim,table$Year, stringsAsFactors = F)
+  if(length(table)!=0){
+    colnames(table)<-c('Year','Make','Model','Trim')
+    #to get vins
+    links = getHTMLLinks(doc)
+    links = unique(links[grep('[0-9A-Z]{17}.aspx',links)])
+    vins = gsub('.*([0-9A-Z]{17}).*','\\1',links)
+    
+    df <- data.frame(vins,table$Make,table$Model,table$Trim,table$Year, stringsAsFactors = F)
+  }
+  else{
+    links = getHTMLLinks(doc)
+    carlinks = unique(links[grep('^/new',links)])
+    
+    vins = gsub('.*([0-9A-Z]{17}).*','\\1',carlinks)
+    year = gsub('.*([0-9]{4}?).*','\\1',carlinks)
+    make = gsub('.*[0-9]{4}?_(.*?)_.*','\\1',carlinks)
+    model = NA
+    trim = NA
+    df <- data.frame(vins,make,model,trim,year, stringsAsFactors = F)
+  }
   colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
   return(df)
 } 
