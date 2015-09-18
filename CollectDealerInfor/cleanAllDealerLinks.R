@@ -4,7 +4,7 @@ ncheck_case <- function(link)
     case = "case1"
   else if(grepl("search/new/tp",link,ignore.case = T)) #2
     case = "case2"
-  else if(grepl("new-inventory(/?)(\\??)$|(new-inventory/index\\.html?)$|(NewInventory\\.htm)",link,ignore.case=T)) #3
+  else if(grepl("new-inventory(/?)(\\??)|(new-inventory/index\\.html?)|(NewInventory\\.htm)|(all-inventory)",link,ignore.case=T)) #3
     case = "case3"
   else if(grepl("new_inventory",link,ignore.case=T))  #4
     case = "case4"
@@ -22,11 +22,11 @@ ncheck_case <- function(link)
     case = "case10"
   else if(grepl("/new-cars-",link,ignore.case=T))#11
     case = "case11"
-  else if(grepl("(/view/New/)$|/view/Make",link,ignore.case=T))#12
+  else if(grepl("(/view/New/)$|(/view/Make)|(newsearch/Make)",link,ignore.case=T))#12
     case = "case12"
-  else if(grepl("/NewToyotaCars$",link,ignore.case=T))#13
+  else if(grepl("(/NewToyotaCars$)|(NewBMWCars$)",link,ignore.case=T))#13
     case = "case13"
-  else if(grepl("/NewToyotaCars.aspx",link,fixed=T))#14
+  else if(grepl("(/NewToyotaCars\\.aspx)|(/NewBMWCars\\.aspx)",link))#14
     case = "case14"
   else if(grepl("/inventory/new-vehicles",link,fixed=T))#15
     case = "case15"
@@ -46,16 +46,25 @@ ncheck_case <- function(link)
     case = "case21"
   else if(grepl("/new-cars/for-sale",link, fixed = T)) #22
     case = "case22"
-  else if(grepl("/vehicle/search/new/\\?page=",link, fixed = T)) #23
+  else if(grepl("/vehicle/search/new/(\\?page=)?",link)) #23
     case = "case23" 
-  else if(grepl("bmw-cars\\.",link)) #24
+  else if(grepl("(bmw-cars\\.asp$)|(bmw\\.asp$)",link)) #24
     case = "case24" 
-  else if(grepl("/new-cars.aspx$",link, fixed = T)) #25 http://www.norwalktoyota.com/search/New+Toyota+tm
+  else if(grepl("(/new-cars\\.aspx$)|(bmw-cars\\.aspx$)",link)) #25 http://www.norwalktoyota.com/search/New+Toyota+tm
     case = "case25" 
+  else if(grepl("new\\.php",link))
+    case = "case26"
+  else if(grepl("plugin-inventory",link))
+    case = "case27"
+  else if(grepl("/all/all",link))
+    case = "case28"
   else
     case = "unknown"
   return(case)
 }
+
+BMWDealers[] <- lapply(BMWDealers, as.character)
+save(BMWDealers,file="nBMWDealers.rdata")
 
 BMW_case_list = unname(sapply(BMWDealers$IV_link,ncheck_case))
 Chevrolet_case_list = unname(sapply(ChevroletDealers$IV_link,ncheck_case))
@@ -65,5 +74,8 @@ Nissan_case_list = unname(sapply(NissanDealers$IV_link,ncheck_case))
 Toyota_case_list = unname(sapply(ToyotaDealers$IV_link,ncheck_case))
 
 #to know which cases we should keep working on
-link_file$Name[which(case_ls=="unknown")]
-link_file$Website[which(case_ls=="unknown")]
+BMWDealers$DealerName[which(BMW_case_list=="unknown")] 
+BMWDealers$IV_link[which(BMW_case_list=="unknown")] 
+
+
+BMWDealers$DealerName[which(BMWDealers$IV_link=='http://www.erhardbmwoffarmingtonhills.com/Specials/new')] = "http://www.erhardbmwoffarmingtonhills.com/VehicleSearchResults?search=new"
