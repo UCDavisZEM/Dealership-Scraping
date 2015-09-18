@@ -1,4 +1,4 @@
-url = "http://www.chapmanbmwoncamelback.com/bmw-cars.asp"
+#url = "http://www.chapmanbmwoncamelback.com/bmw-cars.asp"
 
 getdatacontent.24 = function(node, content){
   tt = xmlAttrs(node)[content]
@@ -96,11 +96,12 @@ alldata.24 = function(url){
       }
       carlinks = unlist(lapply(1:length(carlinks), function(i) {carlinks[[i]]}))
     } 
-    print(carlinks)
+    #print(carlinks)
     allcarlinks[[i]] = carlinks
   }
   allcarlinks = unlist(lapply(1:length(allcarlinks), function(i) {allcarlinks[[i]]}))
   
   cardata = ldply(allcarlinks, scrapeInfo.24)
+  remDr$close()
   return(cardata)
 }
