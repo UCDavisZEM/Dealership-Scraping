@@ -25,14 +25,14 @@ getLinklist.11 = function(url){
   return(Linklist)
 }
 
-scrapeInfo.11 <- function(url)
-{
+scrapeInfo.11 <- function(url){
 doc = htmlParse(url)
 txt = xpathSApply(doc, "//script[@type='text/javascript']",xmlValue)
 tt =  grep("vehicleListGaObjects",txt)
 temptxt = substr(txt[tt], 85, nchar(txt[tt])-10)
 data = fromJSON(temptxt, simplifyVector = T, simplifyDataFrame = TRUE)
-cardata = Reduce(function(x, y) merge(x, y, all=T), data)
+cardata = data.frame(matrix(unlist(data), nrow = length(data), byrow=T))
+names(cardata) = names(data[[1]])
 df <- data.frame(as.character(cardata$VIN),as.character(cardata$Make),as.character(cardata$Model),as.character(cardata$Trim),as.numeric(as.character(cardata$Year)), stringsAsFactors = F)
 colnames(df) <- c("VIN", "Make", "Model", "Trim", "Year")
 return(df)
