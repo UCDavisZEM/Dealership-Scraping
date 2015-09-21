@@ -2,13 +2,15 @@ ncheck_case <- function(link)
 {
   if(grepl("SearchResults\\?search=new$",link,ignore.case=T))#1
     case = "case1"
-  else if(grepl("search/new/tp",link,ignore.case = T)) #2
+  else if(grepl("(search/new/tp)|(search/new-.*/tp)",link,ignore.case = T)) #2
     case = "case2"
   else if(grepl("new-inventory(/?)(\\??)|(new-inventory/index\\.html?)|(NewInventory\\.htm)|(all-inventory)",link,ignore.case=T)) #3
     case = "case3"
+  else if(grepl("(new-.*-inventory.htm$)|(-bmw-inventory.htm$)",link,ignore.case = T)) #3
+    case = "case3"
   else if(grepl("new_inventory",link,ignore.case=T))  #4
     case = "case4"
-  else if(grepl("new-vehicles",link,ignore.case=T)) #5
+  else if(grepl("com/new-vehicles",link,ignore.case=T)) #5
     case = "case5"
   else if(grepl("searchnew\\.aspx$",link,ignore.case=T))#6
     case = "case6"
@@ -20,7 +22,7 @@ ncheck_case <- function(link)
     case = "case9"
   else if(grepl("For-sale/New/?$",link,ignore.case=T))#10
     case = "case10"
-  else if(grepl("/new-cars-",link,ignore.case=T))#11
+  else if(grepl("(/new-cars-)|(com/new-bmw-)",link,ignore.case=T))#11
     case = "case11"
   else if(grepl("(/view/New/)$|(/view/Make)|(newsearch/Make)",link,ignore.case=T))#12
     case = "case12"
@@ -36,9 +38,9 @@ ncheck_case <- function(link)
     case = "case17"
   else if(grepl("/new-.*inventory.*aspx$",link,ignore.case=T))#19
     case = "case19"
-  else if(grepl("/new-chevrolets.aspx$",link,ignore.case = T)) #same code with #19
+  else if(grepl("(/new-chevrolets.aspx$)|(/bmw.aspx)|(/new-bmws.aspx)",link,ignore.case = T)) #same code with #19
     case = "case19"
-  else if(grepl("/inventory.aspx$",link)) #same code with #19
+  else if(grepl("(/inventory.aspx$)|(com/bmw/$)",link)) #same code with #19
     case = "case19"
   else if(grepl("/Inventory/",link, fixed = T)) #20
     case = "case20"
@@ -50,7 +52,7 @@ ncheck_case <- function(link)
     case = "case23" 
   else if(grepl("(bmw-cars\\.asp$)|(bmw\\.asp$)",link)) #24
     case = "case24" 
-  else if(grepl("(/new-cars\\.aspx$)|(bmw-cars\\.aspx$)",link)) #25 http://www.norwalktoyota.com/search/New+Toyota+tm
+  else if(grepl("(/new-cars\\.aspx$)|(bmw-cars\\.aspx$)",link)) #25 
     case = "case25" 
   else if(grepl("new\\.php",link))
     case = "case26"
@@ -58,6 +60,20 @@ ncheck_case <- function(link)
     case = "case27"
   else if(grepl("/all/all",link))
     case = "case28"
+  else if(grepl("newinventory\\.aspx",link))
+    case = "case29"
+  else if(grepl("/new\\.cfm",link))
+    case = "case30"
+  else if(grepl("/inventory?type=new",link,fixed=T))
+    case = "case31" 
+  else if(grepl("com/vehicle/inventory/new$",link))
+    case = "case32"
+  #else if(grepl("com/new/inventory$",link))
+  #  case = "case33"
+  #else if(grepl("/new-cars$",link))
+  #  case = "case34"
+  #else if(grep("",link))
+  #    case = "case36"
   else
     case = "unknown"
   return(case)
@@ -77,5 +93,5 @@ Toyota_case_list = unname(sapply(ToyotaDealers$IV_link,ncheck_case))
 BMWDealers$DealerName[which(BMW_case_list=="unknown")] 
 BMWDealers$IV_link[which(BMW_case_list=="unknown")] 
 
-
+ToyotaDealers$IV_link[which(Toyota_case_list=="unknown")] 
 BMWDealers$DealerName[which(BMWDealers$IV_link=='http://www.erhardbmwoffarmingtonhills.com/Specials/new')] = "http://www.erhardbmwoffarmingtonhills.com/VehicleSearchResults?search=new"
