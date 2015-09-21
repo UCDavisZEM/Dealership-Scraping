@@ -27,10 +27,6 @@ getLinklist.2 = function(url){
 }
 
 
-
-
-
-
 #scrapping data
 getdatacontent.2 = function(node){
  xmlAttrs(node)["content"]
