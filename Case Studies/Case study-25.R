@@ -1,9 +1,11 @@
 ##Case study 25
 #pattern new-cars.aspx/bmw-cars.aspx
-library(RCurl)
+
 #url = "http://www.hondaofdanbury.com/new-cars.aspx"
 #url = "http://www.bmwnorthscottsdale.com/new-cars.aspx"
 #url = "http://www.motorwerksbmw.com/bmw-cars.aspx"
+
+#library(RCurl)
 
 getdatacontent.25 = function(node, content){
   tt = xmlAttrs(node)[content]
