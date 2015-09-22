@@ -76,10 +76,14 @@ ncheck_case <- function(link)
     case = "case35"
   else if(grepl("/search/s:yr1/?q=&tp=new&mk=8-bmw/",link,fixed=T))  #36 special
     case = "case36"
+  else if(grepl("new_bmw.cfm",link,fixed=T))  #37
+    case = "case37"
   else if(grepl("/brands/bmw/new/inventory",link,fixed=T))  #38 special
     case = "case38"
   else if(grepl("browse-new-bmw-inventory",link,fixed=T))  #40
     case = "case40"
+  else if(grepl("selectedcat=new$",link))  #42
+    case = "case42"
   else
     case = "unknown"
   return(case)
