@@ -54,26 +54,32 @@ ncheck_case <- function(link)
     case = "case24" 
   else if(grepl("(/new-cars\\.aspx$)|(bmw-cars\\.aspx$)",link)) #25 
     case = "case25" 
-  else if(grepl("new\\.php",link))
+  else if(grepl("new\\.php",link))  #26
     case = "case26"
-  else if(grepl("plugin-inventory",link))
+  else if(grepl("plugin-inventory",link)) #27
     case = "case27"
-  else if(grepl("/all/all",link))
+  else if(grepl("/all/all",link)) #28
     case = "case28"
-  else if(grepl("newinventory\\.aspx",link))
+  else if(grepl("newinventory\\.aspx",link)) #29
     case = "case29"
-  else if(grepl("/new\\.cfm",link))
+  else if(grepl("/new\\.cfm",link))  #30
     case = "case30"
-  else if(grepl("/inventory?type=new",link,fixed=T))
+  else if(grepl("/inventory?type=new",link,fixed=T))  #31
     case = "case31" 
-  else if(grepl("com/vehicle/inventory/new$",link))
+  else if(grepl("com/vehicle/inventory/new$",link))  #32
     case = "case32"
-  #else if(grepl("com/new/inventory$",link))
-  #  case = "case33"
-  #else if(grepl("/new-cars$",link))
+  else if(grepl("com/new/inventory$",link))  #33
+    case = "case33"
+  #else if(grepl("/new-cars$",link))  
   #  case = "case34"
-  #else if(grep("",link))
-  #    case = "case36"
+  else if(grepl("jcbmwnew.htm",link,fixed=T))  #35
+    case = "case35"
+  else if(grepl("/search/s:yr1/?q=&tp=new&mk=8-bmw/",link,fixed=T))  #36 special
+    case = "case36"
+  else if(grepl("/brands/bmw/new/inventory",link,fixed=T))  #38 special
+    case = "case38"
+  else if(grepl("browse-new-bmw-inventory",link,fixed=T))  #40
+    case = "case40"
   else
     case = "unknown"
   return(case)
