@@ -1,6 +1,6 @@
 
 #case study 41
-#pattern: com/search/New+
+#pattern: com/search/New+t
 #url = "http://www.michaeltoyota.com/search/New+t"
 #url = "http://www.toyotaofelcajon.com/search/New+t"
 
